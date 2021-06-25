@@ -37,7 +37,8 @@ public class SoggySwampBlocks {
     // braziers
     public static Block SS_UNLIT_BRAZIER;
     public static Block SS_LIT_BRAZIER;
-    public static Block SS_GREEN_LIT_BRAZIER;
+    public static Block SS_LIT_WILDFIRE_BRAZIER;
+    public static Block SS_LIT_SOUL_BRAZIER;
 
     //utils
     public static Block SS_WITCH_POLE;
@@ -70,7 +71,8 @@ public class SoggySwampBlocks {
         // braziers
         SS_UNLIT_BRAZIER = JavaDungeons.REGISTRY_HELPER.registerBlock(new DungeonsBrazier(Material.STONE, 1.5F, 6.0F, BlockSoundGroup.STONE, "unlit", true), "ss_unlit_brazier", JavaDungeons.SOGGY_SWAMP);
         SS_LIT_BRAZIER = JavaDungeons.REGISTRY_HELPER.registerBlock(new DungeonsBrazier(Material.STONE, 1.5F, 6.0F, BlockSoundGroup.STONE, "lit", true), "ss_lit_brazier", JavaDungeons.SOGGY_SWAMP);
-        SS_GREEN_LIT_BRAZIER = JavaDungeons.REGISTRY_HELPER.registerBlock(new DungeonsBrazier(Material.STONE, 1.5F, 6.0F, BlockSoundGroup.STONE, "green_lit", true), "ss_green_lit_brazier", JavaDungeons.SOGGY_SWAMP);
+        SS_LIT_WILDFIRE_BRAZIER = JavaDungeons.REGISTRY_HELPER.registerBlock(new DungeonsBrazier(Material.STONE, 1.5F, 6.0F, BlockSoundGroup.STONE, "lit_wildfire", true), "ss_lit_wildfire_brazier", JavaDungeons.SOGGY_SWAMP);
+        SS_LIT_SOUL_BRAZIER = JavaDungeons.REGISTRY_HELPER.registerBlock(new DungeonsBrazier(Material.STONE, 1.5F, 6.0F, BlockSoundGroup.STONE, "lit_soul", true), "ss_lit_soul_brazier", JavaDungeons.SOGGY_SWAMP);
 
         //utils
         SS_WITCH_POLE = JavaDungeons.REGISTRY_HELPER.registerBlock(new DungeonsWitchPole(Material.WOOD, 2.0F, 3.0F, BlockSoundGroup.WOOD), "ss_witch_pole", JavaDungeons.SOGGY_SWAMP);

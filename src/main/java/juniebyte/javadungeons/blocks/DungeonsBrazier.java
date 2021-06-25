@@ -53,7 +53,14 @@ public class DungeonsBrazier extends Block {
             double e = (double)pos.getY() + 0.7D;
             double f = (double)pos.getZ() + 0.5D;
             world.addParticle(ParticleTypes.LARGE_SMOKE, d, e, f, 0.0D, 0.0D, 0.0D);
-            world.addParticle(!type.equals("green_lit") ? ParticleTypes.FLAME : Particles.GREEN_FLAME, d, e, f, 0.0D, 0.0D, 0.0D);
+            switch(type) {
+                case "lit":
+                    world.addParticle(ParticleTypes.FLAME, d, e, f, 0.0D, 0.0D, 0.0D);
+                case "lit_wildfire":
+                    world.addParticle(Particles.GREEN_FLAME, d, e, f, 0.0D, 0.0D, 0.0D);
+                case "lit_soul":
+                    world.addParticle(ParticleTypes.SOUL_FIRE_FLAME, d, e, f, 0.0D, 0.0D, 0.0D);
+            }
         }
     }
 }

@@ -1,17 +1,25 @@
 package juniebyte.javadungeons;
 
 import io.github.vampirestudios.vampirelib.utils.registry.RegistryHelper;
+import juniebyte.javadungeons.blocks.DungeonsCandle;
 import juniebyte.javadungeons.content.*;
 import juniebyte.javadungeons.utils.PointOfInterestRegistry;
 import juniebyte.javadungeons.utils.PointOfInterestTypeCustom;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.object.builder.v1.villager.VillagerProfessionBuilder;
-import net.minecraft.block.Blocks;
+import net.minecraft.block.*;
+import net.minecraft.block.dispenser.FallibleItemDispenserBehavior;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.BlockPointer;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.world.World;
+import net.minecraft.world.event.GameEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -21,7 +29,7 @@ public class JavaDungeons implements ModInitializer {
 
 	public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
-	public static final ItemGroup GENERIC = FabricItemGroupBuilder.build(new Identifier(MOD_ID, "generic"), () -> new ItemStack(GenericBlocks.GREEN_LIT_BRAZIER));
+	public static final ItemGroup GENERIC = FabricItemGroupBuilder.build(new Identifier(MOD_ID, "generic"), () -> new ItemStack(GenericBlocks.LIT_WILDFIRE_BRAZIER));
 	public static final ItemGroup CREEPER_WOODS = FabricItemGroupBuilder.build(new Identifier(MOD_ID, "creeper_woods"), () -> new ItemStack(CreeperWoodsBlocks.CW_MOSSY_STONE_BRICKS));
 	public static final ItemGroup DESERT_TEMPLE = FabricItemGroupBuilder.build(new Identifier(MOD_ID, "desert_temple"), () -> new ItemStack(DesertTempleBlocks.DT_CHISELED_SANDY_STONE));
 	public static final ItemGroup PUMPKIN_PASTURES = FabricItemGroupBuilder.build(new Identifier(MOD_ID, "pumpkin_pastures"), () -> new ItemStack(PumpkinPasturesBlocks.PM_RED_AUTUMNAL_LEAVES));
@@ -85,6 +93,36 @@ public class JavaDungeons implements ModInitializer {
 				.id(id("mystery_merchant"))
 				.workstation(PointOfInterestRegistry.register(new PointOfInterestTypeCustom("mystery_merchant_poi", PointOfInterestTypeCustom.getAllStatesOf(Blocks.PINK_STAINED_GLASS), 1, 1)))
 				.build());
+
+		DispenserBlock.registerBehavior(Items.FLINT_AND_STEEL, new FallibleItemDispenserBehavior() {
+			protected ItemStack dispenseSilently(BlockPointer pointer, ItemStack stack) {
+				World world = pointer.getWorld();
+				this.setSuccess(true);
+				Direction direction = pointer.getBlockState().get(DispenserBlock.FACING);
+				BlockPos blockPos = pointer.getBlockPos().offset(direction);
+				BlockState blockState = world.getBlockState(blockPos);
+				if (AbstractFireBlock.canPlaceAt(world, blockPos, direction)) {
+					world.setBlockState(blockPos, AbstractFireBlock.getState(world, blockPos));
+					world.emitGameEvent(null, GameEvent.BLOCK_PLACE, blockPos);
+				} else if (!CampfireBlock.canBeLit(blockState) && !CandleBlock.canBeLit(blockState) && !CandleCakeBlock.canBeLit(blockState) && DungeonsCandle.canBeLit(blockState)) {
+					if (blockState.getBlock() instanceof TntBlock) {
+						TntBlock.primeTnt(world, blockPos);
+						world.removeBlock(blockPos, false);
+					} else {
+						this.setSuccess(false);
+					}
+				} else {
+					world.setBlockState(blockPos, blockState.with(net.minecraft.state.property.Properties.LIT, true));
+					world.emitGameEvent(null, GameEvent.BLOCK_CHANGE, blockPos);
+				}
+
+				if (this.isSuccess() && stack.damage(1, world.random, null)) {
+					stack.setCount(0);
+				}
+
+				return stack;
+			}
+		});
 
 		LOGGER.info("JavaDungeons initialized!");
 	}

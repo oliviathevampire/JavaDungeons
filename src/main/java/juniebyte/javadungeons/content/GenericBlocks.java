@@ -8,6 +8,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.util.DyeColor;
 
 public class GenericBlocks {
 
@@ -108,7 +109,8 @@ public class GenericBlocks {
     // braziers
     public static Block UNLIT_BRAZIER;
     public static Block LIT_BRAZIER;
-    public static Block GREEN_LIT_BRAZIER;
+    public static Block LIT_WILDFIRE_BRAZIER;
+    public static Block LIT_SOUL_BRAZIER;
 
     // books
     public static Block CLOSED_BOOK;
@@ -116,7 +118,8 @@ public class GenericBlocks {
 
     // candles
     public static Block CANDLE;
-    public static Block GREEN_CANDLE;
+    public static Block WILDFIRE_CANDLE;
+    public static Block SOUL_CANDLE;
 
     // tray
     public static Block TRAY;
@@ -239,15 +242,17 @@ public class GenericBlocks {
         // braziers
         UNLIT_BRAZIER = JavaDungeons.REGISTRY_HELPER.registerBlock(new DungeonsBrazier(Material.METAL, 5.0F, 6.0F, BlockSoundGroup.LANTERN, "unlit", false), "unlit_brazier", JavaDungeons.GENERIC);
         LIT_BRAZIER = JavaDungeons.REGISTRY_HELPER.registerBlock(new DungeonsBrazier(Material.METAL, 5.0F, 6.0F, BlockSoundGroup.LANTERN, "lit", false), "lit_brazier", JavaDungeons.GENERIC);
-        GREEN_LIT_BRAZIER = JavaDungeons.REGISTRY_HELPER.registerBlock(new DungeonsBrazier(Material.METAL, 5.0F, 6.0F, BlockSoundGroup.LANTERN, "green_lit", false), "green_lit_brazier", JavaDungeons.GENERIC);
+        LIT_WILDFIRE_BRAZIER = JavaDungeons.REGISTRY_HELPER.registerBlock(new DungeonsBrazier(Material.METAL, 5.0F, 6.0F, BlockSoundGroup.LANTERN, "lit_wildfire", false), "lit_wildfire_brazier", JavaDungeons.GENERIC);
+        LIT_SOUL_BRAZIER = JavaDungeons.REGISTRY_HELPER.registerBlock(new DungeonsBrazier(Material.METAL, 5.0F, 6.0F, BlockSoundGroup.LANTERN, "lit_soul", false), "lit_soul_brazier", JavaDungeons.GENERIC);
 
         // books
         CLOSED_BOOK = JavaDungeons.REGISTRY_HELPER.registerBlock(new DungeonsBook(Material.WOOD, 2.0F, 3.0F, BlockSoundGroup.WOOD), "closed_book", JavaDungeons.GENERIC);
         OPEN_BOOK = JavaDungeons.REGISTRY_HELPER.registerBlock(new DungeonsBook(Material.WOOD, 2.0F, 3.0F, BlockSoundGroup.WOOD), "open_book", JavaDungeons.GENERIC);
 
         // candles
-        CANDLE = JavaDungeons.REGISTRY_HELPER.registerBlock(new DungeonsCandle(Material.METAL, 5.0F, 6.0F, BlockSoundGroup.LANTERN, false), "candle", JavaDungeons.GENERIC);
-        GREEN_CANDLE = JavaDungeons.REGISTRY_HELPER.registerBlock(new DungeonsCandle(Material.METAL, 5.0F, 6.0F, BlockSoundGroup.LANTERN, true), "green_candle", JavaDungeons.GENERIC);
+        CANDLE = JavaDungeons.REGISTRY_HELPER.registerBlock(new DungeonsCandle(5.0F, 6.0F, BlockSoundGroup.LANTERN, DyeColor.WHITE, "normal"), "candle", JavaDungeons.GENERIC);
+        WILDFIRE_CANDLE = JavaDungeons.REGISTRY_HELPER.registerBlock(new DungeonsCandle(5.0F, 6.0F, BlockSoundGroup.LANTERN, DyeColor.GREEN, "wildfire"), "wildfire_candle", JavaDungeons.GENERIC);
+        SOUL_CANDLE = JavaDungeons.REGISTRY_HELPER.registerBlock(new DungeonsCandle(5.0F, 6.0F, BlockSoundGroup.LANTERN, DyeColor.GREEN, "soul"), "soul_candle", JavaDungeons.GENERIC);
 
         // tray
         TRAY = JavaDungeons.REGISTRY_HELPER.registerBlock(new DungeonsTray(Material.WOOD, 2.0F, 3.0F, BlockSoundGroup.WOOD), "tray", JavaDungeons.GENERIC);
