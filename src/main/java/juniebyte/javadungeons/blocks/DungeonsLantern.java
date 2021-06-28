@@ -7,8 +7,8 @@ import net.minecraft.sound.BlockSoundGroup;
 
 public class DungeonsLantern extends LanternBlock {
 
-    public DungeonsLantern(Material material, float hardness, float resistance, BlockSoundGroup sounds) {
-        super(FabricBlockSettings.of(material).strength(hardness, resistance).sounds(sounds).lightLevel(15));
-    }
+	public DungeonsLantern(Material material, float hardness, float resistance, BlockSoundGroup sounds) {
+		super(FabricBlockSettings.of(material).strength(hardness, resistance).sounds(sounds).lightLevel(15));
+	}
 
 }

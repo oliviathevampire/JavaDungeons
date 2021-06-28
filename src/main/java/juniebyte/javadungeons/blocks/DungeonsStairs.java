@@ -8,8 +8,8 @@ import net.minecraft.sound.BlockSoundGroup;
 
 public class DungeonsStairs extends StairsBlock {
 
-    public DungeonsStairs(Material material, float hardness, float resistance, BlockSoundGroup sounds, Block base) {
-        super(base.getDefaultState(), FabricBlockSettings.of(material).strength(hardness, resistance).sounds(sounds));
-    }
+	public DungeonsStairs(Material material, float hardness, float resistance, BlockSoundGroup sounds, Block base) {
+		super(base.getDefaultState(), FabricBlockSettings.of(material).strength(hardness, resistance).sounds(sounds));
+	}
 
 }

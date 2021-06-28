@@ -22,41 +22,46 @@ import org.spongepowered.asm.mixin.Overwrite;
 @Mixin(FlintAndSteelItem.class)
 public class FlintAndSteelItemMixin {
 
-    /**
-     * @author Olivia
-     */
-    @Overwrite
-    public ActionResult useOnBlock(ItemUsageContext context) {
-        PlayerEntity playerEntity = context.getPlayer();
-        World world = context.getWorld();
-        BlockPos blockPos = context.getBlockPos();
-        BlockState blockState = world.getBlockState(blockPos);
-        if (!CampfireBlock.canBeLit(blockState) && !CandleBlock.canBeLit(blockState) && !CandleCakeBlock.canBeLit(blockState) && DungeonsCandle.canBeLit(blockState)) {
-            BlockPos blockPos2 = blockPos.offset(context.getSide());
-            if (AbstractFireBlock.canPlaceAt(world, blockPos2, context.getPlayerFacing())) {
-                world.playSound(playerEntity, blockPos2, SoundEvents.ITEM_FLINTANDSTEEL_USE, SoundCategory.BLOCKS, 1.0F, world.getRandom().nextFloat() * 0.4F + 0.8F);
-                BlockState blockState2 = AbstractFireBlock.getState(world, blockPos2);
-                world.setBlockState(blockPos2, blockState2, Block.NOTIFY_ALL | Block.REDRAW_ON_MAIN_THREAD);
-                world.emitGameEvent(playerEntity, GameEvent.BLOCK_PLACE, blockPos);
-                ItemStack itemStack = context.getStack();
-                if (playerEntity instanceof ServerPlayerEntity) {
-                    Criteria.PLACED_BLOCK.trigger((ServerPlayerEntity) playerEntity, blockPos2, itemStack);
-                    itemStack.damage(1, (LivingEntity) playerEntity, livingEntity -> livingEntity.sendToolBreakStatus(context.getHand()));
-                }
+	/**
+	 * @author Olivia
+	 * @reason To allow us to light our custom candles
+	 */
+	@Overwrite
+	public ActionResult useOnBlock(ItemUsageContext context) {
+		PlayerEntity playerEntity = context.getPlayer();
+		World world = context.getWorld();
+		BlockPos blockPos = context.getBlockPos();
+		BlockState blockState = world.getBlockState(blockPos);
+		if (! CampfireBlock.canBeLit(blockState) && ! CandleBlock.canBeLit(blockState) &&
+				! CandleCakeBlock.canBeLit(blockState) && DungeonsCandle.canBeLit(blockState)) {
+			BlockPos blockPos2 = blockPos.offset(context.getSide());
+			if (AbstractFireBlock.canPlaceAt(world, blockPos2, context.getPlayerFacing())) {
+				world.playSound(playerEntity, blockPos2, SoundEvents.ITEM_FLINTANDSTEEL_USE, SoundCategory.BLOCKS, 1.0F,
+						world.getRandom().nextFloat() * 0.4F + 0.8F);
+				BlockState blockState2 = AbstractFireBlock.getState(world, blockPos2);
+				world.setBlockState(blockPos2, blockState2, Block.NOTIFY_ALL | Block.REDRAW_ON_MAIN_THREAD);
+				world.emitGameEvent(playerEntity, GameEvent.BLOCK_PLACE, blockPos);
+				ItemStack itemStack = context.getStack();
+				if (playerEntity instanceof ServerPlayerEntity) {
+					Criteria.PLACED_BLOCK.trigger((ServerPlayerEntity) playerEntity, blockPos2, itemStack);
+					itemStack.damage(1, (LivingEntity) playerEntity, livingEntity -> livingEntity.sendToolBreakStatus(context.getHand()));
+				}
 
-                return ActionResult.success(world.isClient());
-            } else {
-                return ActionResult.FAIL;
-            }
-        } else {
-            world.playSound(playerEntity, blockPos, SoundEvents.ITEM_FLINTANDSTEEL_USE, SoundCategory.BLOCKS, 1.0F, world.getRandom().nextFloat() * 0.4F + 0.8F);
-            world.setBlockState(blockPos, blockState.with(Properties.LIT, true), Block.NOTIFY_ALL | Block.REDRAW_ON_MAIN_THREAD);
-            world.emitGameEvent(playerEntity, GameEvent.BLOCK_PLACE, blockPos);
-            if (playerEntity != null) {
-                context.getStack().damage(1, (LivingEntity) playerEntity, (p) -> p.sendToolBreakStatus(context.getHand()));
-            }
+				return ActionResult.success(world.isClient());
+			} else {
+				return ActionResult.FAIL;
+			}
+		} else {
+			world.playSound(playerEntity, blockPos, SoundEvents.ITEM_FLINTANDSTEEL_USE, SoundCategory.BLOCKS, 1.0F,
+					world.getRandom().nextFloat() * 0.4F + 0.8F);
+			world.setBlockState(blockPos, blockState.with(Properties.LIT, true),
+					Block.NOTIFY_ALL | Block.REDRAW_ON_MAIN_THREAD);
+			world.emitGameEvent(playerEntity, GameEvent.BLOCK_PLACE, blockPos);
+			if (playerEntity != null) {
+				context.getStack().damage(1, (LivingEntity) playerEntity, (p) -> p.sendToolBreakStatus(context.getHand()));
+			}
 
-            return ActionResult.success(world.isClient());
-        }
-    }
+			return ActionResult.success(world.isClient());
+		}
+	}
 }

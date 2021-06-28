@@ -34,83 +34,84 @@ import java.util.Random;
 
 public class DungeonsSack extends BlockWithEntity implements Waterloggable {
 
-    // sack block
+	// sack block
 
-    public BlockItem blockItem;
-    public static final BooleanProperty WATERLOGGED;
-    public boolean small;
-    public int size;
+	public static final BooleanProperty WATERLOGGED;
+	protected static final VoxelShape SHAPE = Block.createCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 16.0D, 14.0D);
+	protected static final VoxelShape SMALL_SHAPE = Block.createCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 11.0D, 14.0D);
 
-    protected static final VoxelShape SHAPE = Block.createCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 16.0D, 14.0D);
-    protected static final VoxelShape SMALL_SHAPE = Block.createCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 11.0D, 14.0D);
+	static {
+		WATERLOGGED = Properties.WATERLOGGED;
+	}
 
-    @Override
-    public VoxelShape getOutlineShape(BlockState blockState, BlockView blockView, BlockPos blockPos, ShapeContext entityCtx) {
+	public BlockItem blockItem;
+	public boolean small;
+	public int size;
+
+	public DungeonsSack(Material material, float hardness, float resistance, BlockSoundGroup sounds, boolean small, int size) {
+		super(FabricBlockSettings.of(material).strength(hardness, resistance).sounds(sounds).nonOpaque());
+		this.small = small;
+		this.size = size;
+		this.setDefaultState(this.stateManager.getDefaultState().with(WATERLOGGED, false));
+	}
+
+	@Override
+	public VoxelShape getOutlineShape(BlockState blockState, BlockView blockView, BlockPos blockPos, ShapeContext entityCtx) {
 		return small ? SMALL_SHAPE : SHAPE;
-    }
-    
-    @Override
-    public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-        return sideCoversSmallSquare(world, pos.down(), Direction.UP);
-    }
+	}
 
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(WATERLOGGED);
-    }
-  
-    public FluidState getFluidState(BlockState state) {
-       return state.get(WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
-    }
+	@Override
+	public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
+		return sideCoversSmallSquare(world, pos.down(), Direction.UP);
+	}
 
-    public BlockState getStateForNeighborUpdate(BlockState state, Direction facing, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
-       if (state.get(WATERLOGGED)) {
-          world.getFluidTickScheduler().schedule(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
-       }
+	protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+		builder.add(WATERLOGGED);
+	}
 
-       return facing == Direction.DOWN && !this.canPlaceAt(state, world, pos) ? Blocks.AIR.getDefaultState() : super.getStateForNeighborUpdate(state, facing, neighborState, world, pos, neighborPos);
-    }
+	public FluidState getFluidState(BlockState state) {
+		return state.get(WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
+	}
 
-    public BlockState getPlacementState(ItemPlacementContext ctx) {
-        FluidState fluidState = ctx.getWorld().getFluidState(ctx.getBlockPos());
-        return (BlockState)this.getDefaultState().with(WATERLOGGED, fluidState.isIn(FluidTags.WATER) && fluidState.getLevel() == 8);
-    }
+	public BlockState getStateForNeighborUpdate(BlockState state, Direction facing, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
+		if (state.get(WATERLOGGED)) {
+			world.getFluidTickScheduler().schedule(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+		}
 
-    public DungeonsSack(Material material, float hardness, float resistance, BlockSoundGroup sounds, boolean small, int size) {
-        super(FabricBlockSettings.of(material).strength(hardness, resistance).sounds(sounds).nonOpaque());
-        this.small = small;
-        this.size = size;
-        this.setDefaultState(this.stateManager.getDefaultState().with(WATERLOGGED, false));
-    }
+		return facing == Direction.DOWN &&
+				! this.canPlaceAt(state, world, pos) ? Blocks.AIR.getDefaultState() : super.getStateForNeighborUpdate(state, facing, neighborState, world, pos, neighborPos);
+	}
 
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        if (world.isClient) {
-            return ActionResult.SUCCESS;
-        } else {
-            BlockEntity blockEntity = world.getBlockEntity(pos);
-            if (blockEntity instanceof DungeonsSackBlockEntity) {
-                player.openHandledScreen((DungeonsSackBlockEntity)blockEntity);
-                player.incrementStat(Stats.OPEN_BARREL);
-                PiglinBrain.onGuardedBlockInteracted(player, true);
-            }
+	public BlockState getPlacementState(ItemPlacementContext ctx) {
+		FluidState fluidState = ctx.getWorld().getFluidState(ctx.getBlockPos());
+		return this.getDefaultState().with(WATERLOGGED, fluidState.isIn(FluidTags.WATER) && fluidState.getLevel() == 8);
+	}
 
-            return ActionResult.CONSUME;
-        }
-    }
+	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+		if (world.isClient) {
+			return ActionResult.SUCCESS;
+		} else {
+			BlockEntity blockEntity = world.getBlockEntity(pos);
+			if (blockEntity instanceof DungeonsSackBlockEntity) {
+				player.openHandledScreen((DungeonsSackBlockEntity) blockEntity);
+				player.incrementStat(Stats.OPEN_BARREL);
+				PiglinBrain.onGuardedBlockInteracted(player, true);
+			}
 
-    public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        BlockEntity blockEntity = world.getBlockEntity(pos);
-        if (blockEntity instanceof BarrelBlockEntity) {
-            ((BarrelBlockEntity)blockEntity).tick();
-        }
-    }
+			return ActionResult.CONSUME;
+		}
+	}
 
-    @Nullable
-    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-        return new DungeonsSackBlockEntity(pos, state, size);
-    }
+	public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+		BlockEntity blockEntity = world.getBlockEntity(pos);
+		if (blockEntity instanceof BarrelBlockEntity) {
+			((BarrelBlockEntity) blockEntity).tick();
+		}
+	}
 
-    static {
-        WATERLOGGED = Properties.WATERLOGGED;
-    }
+	@Nullable
+	public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+		return new DungeonsSackBlockEntity(pos, state, size);
+	}
 
 }

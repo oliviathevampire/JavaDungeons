@@ -10,10 +10,7 @@ import net.minecraft.sound.BiomeMoodSound;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.BiomeEffects;
-import net.minecraft.world.biome.GenerationSettings;
-import net.minecraft.world.biome.SpawnSettings;
+import net.minecraft.world.biome.*;
 import net.minecraft.world.gen.CountConfig;
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.decorator.ChanceDecoratorConfig;
@@ -29,11 +26,11 @@ import net.minecraft.world.gen.surfacebuilder.ConfiguredSurfaceBuilder;
 import static juniebyte.javadungeons.JavaDungeons.MOD_ID;
 import static juniebyte.javadungeons.content.Biomes.calcSkyColor;
 
-public class CreeperWoodsBiome extends Biome {
+public class CreeperFieldsBiome extends Biome {
 	static final ConfiguredSurfaceBuilder<?> SURFACE_BUILDER = ConfiguredSurfaceBuilders.CREEPER_WOODS;
-	static final Biome.Weather WEATHER = new Biome.Weather(
-			Precipitation.RAIN, 0.7F,
-			TemperatureModifier.NONE, 0.8F
+	static final Weather WEATHER = new Weather(
+			Precipitation.RAIN, 0.8F,
+			TemperatureModifier.NONE, 0.4F
 	);
 	static final BiomeEffects.Builder BIOME_EFFECTS = new BiomeEffects.Builder()
 			.waterColor(4159204)
@@ -47,12 +44,11 @@ public class CreeperWoodsBiome extends Biome {
 			.surfaceBuilder(SURFACE_BUILDER);
 	static final SpawnSettings.Builder SPAWN_SETTINGS = new SpawnSettings.Builder();
 
-	public CreeperWoodsBiome() {
-		super(WEATHER, Category.FOREST, 0.1F, 0.4F, BIOME_EFFECTS.build(), GENERATION_SETTINGS.build(), SPAWN_SETTINGS.build());
+	public CreeperFieldsBiome() {
+		super(WEATHER, Category.PLAINS, 0.125F, 0.05F, BIOME_EFFECTS.build(), GENERATION_SETTINGS.build(), SPAWN_SETTINGS.build());
 	}
 
 	static {
-
 		DefaultBiomeFeatures.addLandCarvers(GENERATION_SETTINGS);
 		DefaultBiomeFeatures.addDefaultUndergroundStructures(GENERATION_SETTINGS);
 
@@ -76,19 +72,19 @@ public class CreeperWoodsBiome extends Biome {
 
 		GENERATION_SETTINGS.feature(GenerationStep.Feature.LAKES, JDConfiguredFeatures.DUNGEONS_WATER_LAKE);
 
-		GENERATION_SETTINGS.feature(GenerationStep.Feature.UNDERGROUND_ORES, JDConfiguredFeatures.registerConfiguredFeature("cw_dirt", Feature.ORE.configure(new OreFeatureConfig(OreFeatureConfig.Rules.BASE_STONE_OVERWORLD, CreeperWoodsBlocks.CW_DIRT.getDefaultState(), 33)).decorate(Decorator.COUNT_NOISE.configure(new CountNoiseDecoratorConfig(10, 0, 256)))));
-		GENERATION_SETTINGS.feature(GenerationStep.Feature.UNDERGROUND_ORES, JDConfiguredFeatures.registerConfiguredFeature("cw_gravel", Feature.ORE.configure(new OreFeatureConfig(OreFeatureConfig.Rules.BASE_STONE_OVERWORLD, Blocks.GRAVEL.getDefaultState(), 33)).decorate(Decorator.COUNT_NOISE.configure(new CountNoiseDecoratorConfig(8, 0, 256)))));
-		GENERATION_SETTINGS.feature(GenerationStep.Feature.UNDERGROUND_ORES, JDConfiguredFeatures.registerConfiguredFeature("cw_granite", Feature.ORE.configure(new OreFeatureConfig(OreFeatureConfig.Rules.BASE_STONE_OVERWORLD, Blocks.GRANITE.getDefaultState(), 33)).decorate(Decorator.COUNT_NOISE.configure(new CountNoiseDecoratorConfig(10, 0, 80)))));
-		GENERATION_SETTINGS.feature(GenerationStep.Feature.UNDERGROUND_ORES, JDConfiguredFeatures.registerConfiguredFeature("cw_diorite", Feature.ORE.configure(new OreFeatureConfig(OreFeatureConfig.Rules.BASE_STONE_OVERWORLD, Blocks.DIORITE.getDefaultState(), 33)).decorate(Decorator.COUNT_NOISE.configure(new CountNoiseDecoratorConfig(10, 0, 80)))));
-		GENERATION_SETTINGS.feature(GenerationStep.Feature.UNDERGROUND_ORES, JDConfiguredFeatures.registerConfiguredFeature("cw_andesite", Feature.ORE.configure(new OreFeatureConfig(OreFeatureConfig.Rules.BASE_STONE_OVERWORLD, Blocks.ANDESITE.getDefaultState(), 33)).decorate(Decorator.COUNT_NOISE.configure(new CountNoiseDecoratorConfig(10, 0, 80)))));
+		GENERATION_SETTINGS.feature(GenerationStep.Feature.UNDERGROUND_ORES, JDConfiguredFeatures.registerConfiguredFeature("cf_dirt", Feature.ORE.configure(new OreFeatureConfig(OreFeatureConfig.Rules.BASE_STONE_OVERWORLD, CreeperWoodsBlocks.CW_DIRT.getDefaultState(), 33)).decorate(Decorator.COUNT_NOISE.configure(new CountNoiseDecoratorConfig(10, 0, 256)))));
+		GENERATION_SETTINGS.feature(GenerationStep.Feature.UNDERGROUND_ORES, JDConfiguredFeatures.registerConfiguredFeature("cf_gravel", Feature.ORE.configure(new OreFeatureConfig(OreFeatureConfig.Rules.BASE_STONE_OVERWORLD, Blocks.GRAVEL.getDefaultState(), 33)).decorate(Decorator.COUNT_NOISE.configure(new CountNoiseDecoratorConfig(8, 0, 256)))));
+		GENERATION_SETTINGS.feature(GenerationStep.Feature.UNDERGROUND_ORES, JDConfiguredFeatures.registerConfiguredFeature("cf_granite", Feature.ORE.configure(new OreFeatureConfig(OreFeatureConfig.Rules.BASE_STONE_OVERWORLD, Blocks.GRANITE.getDefaultState(), 33)).decorate(Decorator.COUNT_NOISE.configure(new CountNoiseDecoratorConfig(10, 0, 80)))));
+		GENERATION_SETTINGS.feature(GenerationStep.Feature.UNDERGROUND_ORES, JDConfiguredFeatures.registerConfiguredFeature("cf_diorite", Feature.ORE.configure(new OreFeatureConfig(OreFeatureConfig.Rules.BASE_STONE_OVERWORLD, Blocks.DIORITE.getDefaultState(), 33)).decorate(Decorator.COUNT_NOISE.configure(new CountNoiseDecoratorConfig(10, 0, 80)))));
+		GENERATION_SETTINGS.feature(GenerationStep.Feature.UNDERGROUND_ORES, JDConfiguredFeatures.registerConfiguredFeature("cf_andesite", Feature.ORE.configure(new OreFeatureConfig(OreFeatureConfig.Rules.BASE_STONE_OVERWORLD, Blocks.ANDESITE.getDefaultState(), 33)).decorate(Decorator.COUNT_NOISE.configure(new CountNoiseDecoratorConfig(10, 0, 80)))));
 
 		// mossy stone
 		GENERATION_SETTINGS.feature(GenerationStep.Feature.UNDERGROUND_ORES,
-				Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new Identifier(MOD_ID, "mossy_stone"), Feature.ORE.configure(new OreFeatureConfig(OreFeatureConfig.Rules.BASE_STONE_OVERWORLD,
+				Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new Identifier(MOD_ID, "cf_mossy_stone"), Feature.ORE.configure(new OreFeatureConfig(OreFeatureConfig.Rules.BASE_STONE_OVERWORLD,
 						CreeperWoodsBlocks.CW_MOSSY_STONE.getDefaultState(), 33)).decorate(Decorator.COUNT_NOISE.configure(new CountNoiseDecoratorConfig(10, 0, 128))))
 		);
 
-		GENERATION_SETTINGS.feature(GenerationStep.Feature.VEGETAL_DECORATION, Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new Identifier(MOD_ID, "cw_trees"),
+		GENERATION_SETTINGS.feature(GenerationStep.Feature.VEGETAL_DECORATION, Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new Identifier(MOD_ID, "cf_trees"),
 				Feature.RANDOM_SELECTOR.configure(
 						new RandomFeatureConfig(
 								ImmutableList.of(
@@ -98,18 +94,18 @@ public class CreeperWoodsBiome extends Biome {
 								JDConfiguredFeatures.CW_OAK_TREE
 						)
 				).decorate(ConfiguredFeatures.Decorators.SQUARE_HEIGHTMAP)
-						.decorate(Decorator.COUNT_EXTRA.configure(new CountExtraDecoratorConfig(10, 0.1F, 1))))
+						.decorate(Decorator.COUNT_EXTRA.configure(new CountExtraDecoratorConfig(0, 0.05F, 1))))
 		);
 
 		// glow shrooms
 		GENERATION_SETTINGS.feature(GenerationStep.Feature.VEGETAL_DECORATION,
-				Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new Identifier(MOD_ID, "glow_plants"),
+				Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new Identifier(MOD_ID, "cf_glow_plants"),
 						Features.GLOW_PLANTS.configure(new CountConfig(4))
 								.decorate(Decorator.CHANCE.configure(new ChanceDecoratorConfig(3)))));
 
 		// pop flower and flower patches
 		GENERATION_SETTINGS.feature(GenerationStep.Feature.VEGETAL_DECORATION,
-				Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new Identifier(MOD_ID, "pop_flower"), Feature.RANDOM_PATCH.configure(new RandomPatchFeatureConfig.Builder(
+				Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new Identifier(MOD_ID, "cf_pop_flower"), Feature.RANDOM_PATCH.configure(new RandomPatchFeatureConfig.Builder(
 						new SimpleBlockStateProvider(CreeperWoodsBlocks.CW_POP_FLOWER.getDefaultState()),
 						new SimpleBlockPlacer())
 						.tries(64).whitelist(ImmutableSet.of(CreeperWoodsBlocks.CW_GRASS_BLOCK))
@@ -117,7 +113,7 @@ public class CreeperWoodsBiome extends Biome {
 				)
 		);
 		GENERATION_SETTINGS.feature(GenerationStep.Feature.VEGETAL_DECORATION,
-				Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new Identifier(MOD_ID, "flower_patch"), Feature.RANDOM_PATCH.configure(new RandomPatchFeatureConfig.Builder(
+				Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new Identifier(MOD_ID, "cf_flower_patch"), Feature.RANDOM_PATCH.configure(new RandomPatchFeatureConfig.Builder(
 						new SimpleBlockStateProvider(CreeperWoodsBlocks.CW_FLOWER_PATCH.getDefaultState()),
 						new SimpleBlockPlacer())
 						.tries(64).whitelist(ImmutableSet.of(CreeperWoodsBlocks.CW_GRASS_BLOCK))
@@ -127,7 +123,7 @@ public class CreeperWoodsBiome extends Biome {
 
 		// add dungeons vegetation
 		GENERATION_SETTINGS.feature(GenerationStep.Feature.VEGETAL_DECORATION,
-				Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new Identifier(MOD_ID, "cw_short_grass"), Feature.RANDOM_PATCH.configure(
+				Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new Identifier(MOD_ID, "cf_short_grass"), Feature.RANDOM_PATCH.configure(
 						new RandomPatchFeatureConfig.Builder(new SimpleBlockStateProvider(GenericBlocks.SHORT_GRASS.getDefaultState()), new SimpleBlockPlacer())
 								.tries(32)
 								.build()).decorate(Decorator.CHANCE.configure(new ChanceDecoratorConfig(2)))
@@ -135,7 +131,7 @@ public class CreeperWoodsBiome extends Biome {
 		);
 
 		GENERATION_SETTINGS.feature(GenerationStep.Feature.VEGETAL_DECORATION,
-				Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new Identifier(MOD_ID, "cw_fern"), Feature.RANDOM_PATCH.configure(
+				Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new Identifier(MOD_ID, "cf_fern"), Feature.RANDOM_PATCH.configure(
 						new RandomPatchFeatureConfig.Builder(new SimpleBlockStateProvider(GenericBlocks.FERN.getDefaultState()), new SimpleBlockPlacer())
 								.tries(32)
 								.build()).decorate(Decorator.CHANCE.configure(new ChanceDecoratorConfig(2)))
@@ -143,7 +139,7 @@ public class CreeperWoodsBiome extends Biome {
 		);
 
 		GENERATION_SETTINGS.feature(GenerationStep.Feature.VEGETAL_DECORATION,
-				Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new Identifier(MOD_ID, "cw_shrub"), Feature.RANDOM_PATCH.configure(
+				Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new Identifier(MOD_ID, "cf_shrub"), Feature.RANDOM_PATCH.configure(
 						new RandomPatchFeatureConfig.Builder(
 								new SimpleBlockStateProvider(CreeperWoodsBlocks.CW_SHRUB.getDefaultState()),
 								new SimpleBlockPlacer()
@@ -153,7 +149,7 @@ public class CreeperWoodsBiome extends Biome {
 
 		// add berry bush blocks
 		GENERATION_SETTINGS.feature(GenerationStep.Feature.VEGETAL_DECORATION,
-				Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new Identifier(MOD_ID, "cw_berry_bush"), Feature.RANDOM_PATCH.configure(
+				Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new Identifier(MOD_ID, "cf_berry_bush"), Feature.RANDOM_PATCH.configure(
 						new RandomPatchFeatureConfig.Builder(
 								new SimpleBlockStateProvider(GenericBlocks.BERRY_BUSH_BLOCK.getDefaultState()),
 								new SimpleBlockPlacer()

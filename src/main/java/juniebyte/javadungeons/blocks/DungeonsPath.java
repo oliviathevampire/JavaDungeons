@@ -8,12 +8,12 @@ import net.minecraft.sound.BlockSoundGroup;
 
 public class DungeonsPath extends DirtPathBlock {
 
-    // path block
+	// path block
 
-    public BlockItem blockItem;
+	public BlockItem blockItem;
 
-    public DungeonsPath(Material material, float hardness, float resistance, BlockSoundGroup sounds) {
-        super(FabricBlockSettings.of(material).strength(hardness, resistance).sounds(sounds));
-    }
+	public DungeonsPath(Material material, float hardness, float resistance, BlockSoundGroup sounds) {
+		super(FabricBlockSettings.of(material).strength(hardness, resistance).sounds(sounds));
+	}
 
 }

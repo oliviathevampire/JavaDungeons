@@ -11,12 +11,14 @@ import java.util.function.ToIntFunction;
 
 public class DungeonsPoweredEmissive extends RedstoneLampBlock {
 
-    private static ToIntFunction<BlockState> getLightLevel() {
-        return (blockState) -> { return blockState.get(Properties.LIT) ? 15 : 0; };
-    }
+	public DungeonsPoweredEmissive(Material material, float hardness, float resistance, BlockSoundGroup sounds) {
+		super(FabricBlockSettings.of(material).strength(hardness, resistance).sounds(sounds).lightLevel(getLightLevel()));
+	}
 
-    public DungeonsPoweredEmissive(Material material, float hardness, float resistance, BlockSoundGroup sounds) {
-        super(FabricBlockSettings.of(material).strength(hardness, resistance).sounds(sounds).lightLevel(getLightLevel()));
-    }
+	private static ToIntFunction<BlockState> getLightLevel() {
+		return (blockState) -> {
+			return blockState.get(Properties.LIT) ? 15 : 0;
+		};
+	}
 
 }

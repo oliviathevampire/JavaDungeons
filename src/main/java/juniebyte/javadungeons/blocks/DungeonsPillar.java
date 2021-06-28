@@ -7,8 +7,8 @@ import net.minecraft.sound.BlockSoundGroup;
 
 public class DungeonsPillar extends PillarBlock {
 
-    public DungeonsPillar(Material material, float hardness, float resistance, BlockSoundGroup sounds) {
-        super(FabricBlockSettings.of(material).strength(hardness, resistance).sounds(sounds));
-    }
+	public DungeonsPillar(Material material, float hardness, float resistance, BlockSoundGroup sounds) {
+		super(FabricBlockSettings.of(material).strength(hardness, resistance).sounds(sounds));
+	}
 
 }

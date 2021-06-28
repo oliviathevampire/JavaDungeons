@@ -11,22 +11,21 @@ import net.minecraft.world.BlockView;
 
 public class DungeonsDesertTallPlant extends TallPlantBlock {
 
-    // tall desert plant block
+	// tall desert plant block
 
-    public BlockItem blockItem;
+	protected static final VoxelShape SHAPE = Block.createCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 13.0D, 14.0D);
+	public BlockItem blockItem;
 
-    protected static final VoxelShape SHAPE = Block.createCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 13.0D, 14.0D);
+	public DungeonsDesertTallPlant(Material material, float hardness, float resistance, BlockSoundGroup sounds) {
+		super(FabricBlockSettings.of(material).strength(hardness, resistance).sounds(sounds).nonOpaque().collidable(false));
+	}
 
-    @Override
-    protected boolean canPlantOnTop(BlockState floor, BlockView view, BlockPos pos) {
-        return floor.isIn(Tags.DESERT_PLANTABLE) || floor.isIn(Tags.PLANTABLE);
-    }
+	@Override
+	protected boolean canPlantOnTop(BlockState floor, BlockView view, BlockPos pos) {
+		return floor.isIn(Tags.DESERT_PLANTABLE) || floor.isIn(Tags.PLANTABLE);
+	}
 
-    public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, ShapeContext context) {
-        return SHAPE;
-    }
-
-    public DungeonsDesertTallPlant(Material material, float hardness, float resistance, BlockSoundGroup sounds) {
-        super(FabricBlockSettings.of(material).strength(hardness, resistance).sounds(sounds).nonOpaque().collidable(false));
-    }
+	public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, ShapeContext context) {
+		return SHAPE;
+	}
 }

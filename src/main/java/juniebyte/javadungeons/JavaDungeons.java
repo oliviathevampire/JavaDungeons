@@ -24,7 +24,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class JavaDungeons implements ModInitializer {
-
 	public static final String MOD_ID = "dungeons";
 
 	public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
@@ -44,7 +43,8 @@ public class JavaDungeons implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		// other stuff
+		LOGGER.info("JavaDungeons initializing!");
+		// Other stuff
 		Tags.init();
 		Sounds.init();
 		Fluids.init();
@@ -54,7 +54,8 @@ public class JavaDungeons implements ModInitializer {
 		Containers.init();
 		Paintings.init();
 
-		// blocks
+		// Blocks
+		LOGGER.info("JavaDungeons registering blocks!");
 		GenericBlocks.init();
 		CreeperWoodsBlocks.init();
 		SoggySwampBlocks.init();
@@ -64,15 +65,24 @@ public class JavaDungeons implements ModInitializer {
 		RedstoneMinesBlocks.init();
 		FieryForgeBlocks.init();
 
-		// items
+		// Items
+		LOGGER.info("JavaDungeons registering items!");
 		Weapons.init();
 		Armors.init();
 
-		// worldgen
-		SurfaceBuilders.init();
+		// Worldgen
+		LOGGER.info("JavaDungeons registering worldgen!");
 		Features.init();
 		JDConfiguredFeatures.init();
+		SurfaceBuilders.init();
+		ConfiguredSurfaceBuilders.init();
+		StructureFeatures.init();
+		StructureFeatures.setupStructures();
+		ConfiguredStructureFeatures.init();
 		Biomes.init();
+
+		// Villager Professions
+		LOGGER.info("JavaDungeons registering villager professions!");
 		Registry.register(Registry.VILLAGER_PROFESSION, id("gift_wrapper"), VillagerProfessionBuilder.create()
 				.id(id("gift_wrapper"))
 				.workstation(PointOfInterestRegistry.register(new PointOfInterestTypeCustom("gift_wrapper_poi", PointOfInterestTypeCustom.getAllStatesOf(Blocks.GLASS), 1, 1)))
@@ -94,6 +104,8 @@ public class JavaDungeons implements ModInitializer {
 				.workstation(PointOfInterestRegistry.register(new PointOfInterestTypeCustom("mystery_merchant_poi", PointOfInterestTypeCustom.getAllStatesOf(Blocks.PINK_STAINED_GLASS), 1, 1)))
 				.build());
 
+		// Dispenser behaviours
+		LOGGER.info("JavaDungeons registering dispenser behaviours!");
 		DispenserBlock.registerBehavior(Items.FLINT_AND_STEEL, new FallibleItemDispenserBehavior() {
 			protected ItemStack dispenseSilently(BlockPointer pointer, ItemStack stack) {
 				World world = pointer.getWorld();
@@ -126,7 +138,7 @@ public class JavaDungeons implements ModInitializer {
 
 		LOGGER.info("JavaDungeons initialized!");
 	}
-	
+
 	public Identifier id(String idk) {
 		return new Identifier(MOD_ID, idk);
 	}

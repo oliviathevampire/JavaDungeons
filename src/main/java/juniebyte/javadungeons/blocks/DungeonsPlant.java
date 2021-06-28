@@ -11,22 +11,21 @@ import net.minecraft.world.BlockView;
 
 public class DungeonsPlant extends PlantBlock {
 
-    // plant block
+	// plant block
 
-    public BlockItem blockItem;
+	protected static final VoxelShape SHAPE = Block.createCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 13.0D, 14.0D);
+	public BlockItem blockItem;
 
-    protected static final VoxelShape SHAPE = Block.createCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 13.0D, 14.0D);
+	public DungeonsPlant(Material material, float hardness, float resistance, BlockSoundGroup sounds) {
+		super(FabricBlockSettings.of(material).strength(hardness, resistance).sounds(sounds).nonOpaque().collidable(false));
+	}
 
-    public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, ShapeContext context) {
-        return SHAPE;
-    }
+	public DungeonsPlant(Material material, BlockSoundGroup sounds) {
+		super(FabricBlockSettings.of(material).sounds(sounds).nonOpaque().collidable(false).breakByHand(true).breakByTool(FabricToolTags.PICKAXES));
+	}
 
-    public DungeonsPlant(Material material, float hardness, float resistance, BlockSoundGroup sounds) {
-        super(FabricBlockSettings.of(material).strength(hardness, resistance).sounds(sounds).nonOpaque().collidable(false));
-    }
-
-    public DungeonsPlant(Material material, BlockSoundGroup sounds) {
-        super(FabricBlockSettings.of(material).sounds(sounds).nonOpaque().collidable(false).breakByHand(true).breakByTool(FabricToolTags.PICKAXES));
-    }
+	public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, ShapeContext context) {
+		return SHAPE;
+	}
 
 }

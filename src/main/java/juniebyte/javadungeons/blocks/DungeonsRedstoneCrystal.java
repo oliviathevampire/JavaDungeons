@@ -15,25 +15,24 @@ import net.minecraft.world.BlockView;
 
 public class DungeonsRedstoneCrystal extends Block {
 
-    // redstone crystal block
+	// redstone crystal block
 
-    public BlockItem blockItem;
+	protected static final VoxelShape SHAPE = Block.createCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 13.0D, 14.0D);
+	public BlockItem blockItem;
 
-    protected static final VoxelShape SHAPE = Block.createCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 13.0D, 14.0D);
+	public DungeonsRedstoneCrystal(Material material, float hardness, float resistance, BlockSoundGroup sounds) {
+		super(FabricBlockSettings.of(new FabricMaterialBuilder(material.getColor()).destroyedByPiston().build()).strength(hardness, resistance).sounds(sounds).nonOpaque().lightLevel(12));
+	}
 
-    public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, ShapeContext context) {
-        return SHAPE;
-    }
+	public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, ShapeContext context) {
+		return SHAPE;
+	}
 
-    public DungeonsRedstoneCrystal(Material material, float hardness, float resistance, BlockSoundGroup sounds) {
-        super(FabricBlockSettings.of(new FabricMaterialBuilder(material.getColor()).destroyedByPiston().build()).strength(hardness, resistance).sounds(sounds).nonOpaque().lightLevel(12));
-    }
+	public boolean emitsRedstonePower(BlockState state) {
+		return true;
+	}
 
-    public boolean emitsRedstonePower(BlockState state) {
-        return true;
-    }
-  
-    public int getWeakRedstonePower(BlockState state, BlockView view, BlockPos pos, Direction facing) {
-        return 8;
-    }
+	public int getWeakRedstonePower(BlockState state, BlockView view, BlockPos pos, Direction facing) {
+		return 8;
+	}
 }

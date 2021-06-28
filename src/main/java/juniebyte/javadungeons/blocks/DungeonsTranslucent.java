@@ -7,8 +7,8 @@ import net.minecraft.sound.BlockSoundGroup;
 
 public class DungeonsTranslucent extends GlassBlock {
 
-    public DungeonsTranslucent(Material material, float hardness, float resistance, BlockSoundGroup sounds) {
-        super(FabricBlockSettings.of(material).strength(hardness, resistance).sounds(sounds).nonOpaque());
-    }
+	public DungeonsTranslucent(Material material, float hardness, float resistance, BlockSoundGroup sounds) {
+		super(FabricBlockSettings.of(material).strength(hardness, resistance).sounds(sounds).nonOpaque());
+	}
 
 }

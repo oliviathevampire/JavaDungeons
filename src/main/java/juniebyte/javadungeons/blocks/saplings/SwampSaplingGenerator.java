@@ -10,7 +10,7 @@ import java.util.Random;
 public class SwampSaplingGenerator extends SaplingGenerator {
 
 	protected ConfiguredFeature<TreeFeatureConfig, ?> createTreeFeature(Random random, boolean bl) {
-        return JDConfiguredFeatures.SS_SWAMP_TREE;
+		return JDConfiguredFeatures.SS_SWAMP_TREE;
 	}
 
 }

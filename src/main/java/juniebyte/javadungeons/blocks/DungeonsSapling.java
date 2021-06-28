@@ -7,8 +7,8 @@ import net.minecraft.block.sapling.SaplingGenerator;
 
 public class DungeonsSapling extends SaplingBlock {
 
-    public DungeonsSapling(SaplingGenerator generator) {
-        super(generator, FabricBlockSettings.copyOf(Blocks.OAK_SAPLING));
-    }
+	public DungeonsSapling(SaplingGenerator generator) {
+		super(generator, FabricBlockSettings.copyOf(Blocks.OAK_SAPLING));
+	}
 
 }

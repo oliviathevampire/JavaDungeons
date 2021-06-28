@@ -13,18 +13,18 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(PlayerListEntry.class)
 public abstract class PlayerListEntryMixin implements ICapeTexture {
-    @Shadow
-    @Final
-    private GameProfile profile;
+	@Shadow
+	@Final
+	private GameProfile profile;
 
-    @Inject(method = "getCapeTexture", at = @At("RETURN"), cancellable = true)
-    public void getCapeTexture(CallbackInfoReturnable<Identifier> callbackInfoReturnable) {
+	@Inject(method = "getCapeTexture", at = @At("RETURN"), cancellable = true)
+	public void getCapeTexture(CallbackInfoReturnable<Identifier> callbackInfoReturnable) {
 
-    }
+	}
 
-    @Inject(method = "getElytraTexture", at = @At("RETURN"), cancellable = true)
-    public void getElytraTexture(CallbackInfoReturnable<Identifier> callbackInfoReturnable) {
+	@Inject(method = "getElytraTexture", at = @At("RETURN"), cancellable = true)
+	public void getElytraTexture(CallbackInfoReturnable<Identifier> callbackInfoReturnable) {
 
-    }
-    
+	}
+
 }

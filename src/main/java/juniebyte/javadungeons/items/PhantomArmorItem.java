@@ -18,35 +18,40 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class PhantomArmorItem extends ArmorItem {
-    public final boolean unique;
+	public final boolean unique;
 
-    public PhantomArmorItem(String id, ArmorMaterial armorMaterial, EquipmentSlot slotType, Settings properties, boolean unique) {
-        super(armorMaterial, slotType, properties);
-        this.unique = unique;
-        Registry.register(Registry.ITEM, new Identifier(JavaDungeons.MOD_ID, id), this);
-    }
+	public PhantomArmorItem(String id, ArmorMaterial armorMaterial, EquipmentSlot slotType, Settings properties, boolean unique) {
+		super(armorMaterial, slotType, properties);
+		this.unique = unique;
+		Registry.register(Registry.ITEM, new Identifier(JavaDungeons.MOD_ID, id), this);
+	}
 
-    @Override
-    public Rarity getRarity(ItemStack itemStack){
-        if(this.unique) return Rarity.RARE;
-        return Rarity.UNCOMMON;
-    }
+	@Override
+	public Rarity getRarity(ItemStack itemStack) {
+		if (this.unique) {
+			return Rarity.RARE;
+		}
+		return Rarity.UNCOMMON;
+	}
 
-    @Override
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        super.appendTooltip(stack, world, tooltip, context);
+	@Override
+	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+		super.appendTooltip(stack, world, tooltip, context);
 
-        if (this.unique) {
-            tooltip.add(new LiteralText(Formatting.WHITE + "" + Formatting.ITALIC + "Frost Bite remembers the icy winds"));
-            tooltip.add(new LiteralText(Formatting.WHITE + "" + Formatting.ITALIC + "which once flowed beneath the wings of the night Phantoms."));
-            if(this.slot == EquipmentSlot.CHEST){
-                tooltip.add(new LiteralText(Formatting.GREEN + "Spawns A Snowy Companion (Snowball I)"));
-            }
-        }
-        else{
-            tooltip.add(new LiteralText(Formatting.WHITE + "" + Formatting.ITALIC + "This armor, crafted from the bones of Phantoms,"));
-            tooltip.add(new LiteralText(Formatting.WHITE + "" + Formatting.ITALIC + "is a terrifying sight on the battlefield."));
-        }
-    }
+		if (this.unique) {
+			tooltip.add(new LiteralText(
+					Formatting.WHITE + "" + Formatting.ITALIC + "Frost Bite remembers the icy winds"));
+			tooltip.add(new LiteralText(Formatting.WHITE + "" + Formatting.ITALIC +
+					"which once flowed beneath the wings of the night Phantoms."));
+			if (this.slot == EquipmentSlot.CHEST) {
+				tooltip.add(new LiteralText(Formatting.GREEN + "Spawns A Snowy Companion (Snowball I)"));
+			}
+		} else {
+			tooltip.add(new LiteralText(
+					Formatting.WHITE + "" + Formatting.ITALIC + "This armor, crafted from the bones of Phantoms,"));
+			tooltip.add(new LiteralText(
+					Formatting.WHITE + "" + Formatting.ITALIC + "is a terrifying sight on the battlefield."));
+		}
+	}
 
 }

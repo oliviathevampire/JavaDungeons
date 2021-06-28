@@ -12,13 +12,13 @@ import java.util.Random;
 
 public class DungeonsLayeringBlock extends SnowBlock {
 
-    // override to remove melting functionality
-    @Override
-    public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-    }
+	public DungeonsLayeringBlock(Material material, float hardness, float resistance, BlockSoundGroup sounds) {
+		super(FabricBlockSettings.of(material).strength(hardness, resistance).sounds(sounds));
+	}
 
-    public DungeonsLayeringBlock(Material material, float hardness, float resistance, BlockSoundGroup sounds) {
-        super(FabricBlockSettings.of(material).strength(hardness, resistance).sounds(sounds));
-    }
+	// override to remove melting functionality
+	@Override
+	public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+	}
 
 }

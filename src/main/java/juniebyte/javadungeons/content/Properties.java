@@ -5,24 +5,24 @@ import net.minecraft.util.StringIdentifiable;
 
 public class Properties {
 
-    public static enum Contains implements StringIdentifiable {
-        EMPTY("empty"),
-        YELLOW_TULIP("yellow_tulip");
+	public static EnumProperty<Contains> CONTAINS;
 
-        private final String name;
+	public static void init() {
+		CONTAINS = EnumProperty.of("contains", Contains.class);
+	}
 
-        private Contains(String name) {
-            this.name = name;
-        }
+	public enum Contains implements StringIdentifiable {
+		EMPTY("empty"),
+		YELLOW_TULIP("yellow_tulip");
 
-        public String asString() {
-            return this.name;
-        }
-    }
+		private final String name;
 
-    public static EnumProperty<Contains> CONTAINS;
+		Contains(String name) {
+			this.name = name;
+		}
 
-    public static void init() {
-        CONTAINS = EnumProperty.of("contains", Contains.class);
-    }
+		public String asString() {
+			return this.name;
+		}
+	}
 }

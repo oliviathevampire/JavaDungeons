@@ -23,60 +23,61 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
 public class DungeonsTransformer extends Block {
-   public static final TranslatableText CONTAINER_NAME = new TranslatableText("container.dungeons.dungeons_transformer", new Object[0]);
-   public static final DirectionProperty FACING;
-   public static final Identifier ID = new Identifier(JavaDungeons.MOD_ID, "dungeons_transformer");
-   public BlockItem blockItem;
+	public static final TranslatableText CONTAINER_NAME = new TranslatableText("container.dungeons.dungeons_transformer", new Object[0]);
+	public static final DirectionProperty FACING;
+	public static final Identifier ID = new Identifier(JavaDungeons.MOD_ID, "dungeons_transformer");
 
-   public DungeonsTransformer() {
-      super(FabricBlockSettings.copy(Blocks.OBSIDIAN));
-      this.setDefaultState(this.stateManager.getDefaultState().with(FACING, Direction.NORTH));
-   }
+	static {
+		FACING = HorizontalFacingBlock.FACING;
+	}
 
-   public BlockState getPlacementState(ItemPlacementContext ctx) {
-      return this.getDefaultState().with(FACING, ctx.getPlayerFacing().getOpposite());
-   }
+	public BlockItem blockItem;
 
-   public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-      if (!world.isClient) {
-         ContainerProviderRegistry.INSTANCE.openContainer(ID, player, buf -> buf.writeBlockPos(pos));
-         //player.openContainer(state.createContainerFactory(world, pos));
-      }
-      return ActionResult.SUCCESS;
-   }
+	public DungeonsTransformer() {
+		super(FabricBlockSettings.copy(Blocks.OBSIDIAN));
+		this.setDefaultState(this.stateManager.getDefaultState().with(FACING, Direction.NORTH));
+	}
 
-   public NamedScreenHandlerFactory createScreenHandlerFactory(BlockState state, World world, BlockPos pos) {
-      return new SimpleNamedScreenHandlerFactory((i, playerInventory, playerEntity) ->
-              new DungeonsTransformerScreenHandler(i, playerInventory, ScreenHandlerContext.create(world, pos)),
-              CONTAINER_NAME
-      );
-   }
+	public BlockState getPlacementState(ItemPlacementContext ctx) {
+		return this.getDefaultState().with(FACING, ctx.getPlayerFacing().getOpposite());
+	}
 
-   public boolean hasSidedTransparency(BlockState state) {
-      return true;
-   }
+	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+		if (! world.isClient) {
+			ContainerProviderRegistry.INSTANCE.openContainer(ID, player, buf -> buf.writeBlockPos(pos));
+			//player.openContainer(state.createContainerFactory(world, pos));
+		}
+		return ActionResult.SUCCESS;
+	}
 
-   public BlockRenderType getRenderType(BlockState state) {
-      return BlockRenderType.MODEL;
-   }
+	public NamedScreenHandlerFactory createScreenHandlerFactory(BlockState state, World world, BlockPos pos) {
+		return new SimpleNamedScreenHandlerFactory((i, playerInventory, playerEntity) ->
+				new DungeonsTransformerScreenHandler(i, playerInventory, ScreenHandlerContext.create(world, pos)),
+				CONTAINER_NAME
+		);
+	}
 
-   public BlockState rotate(BlockState state, BlockRotation rotation) {
-      return state.with(FACING, rotation.rotate(state.get(FACING)));
-   }
+	public boolean hasSidedTransparency(BlockState state) {
+		return true;
+	}
 
-   public BlockState mirror(BlockState state, BlockMirror mirror) {
-      return state.rotate(mirror.getRotation(state.get(FACING)));
-   }
+	public BlockRenderType getRenderType(BlockState state) {
+		return BlockRenderType.MODEL;
+	}
 
-   protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-      builder.add(FACING);
-   }
+	public BlockState rotate(BlockState state, BlockRotation rotation) {
+		return state.with(FACING, rotation.rotate(state.get(FACING)));
+	}
 
-   public boolean canPathfindThrough(BlockState world, BlockView view, BlockPos pos, NavigationType env) {
-      return false;
-   }
+	public BlockState mirror(BlockState state, BlockMirror mirror) {
+		return state.rotate(mirror.getRotation(state.get(FACING)));
+	}
 
-   static {
-      FACING = HorizontalFacingBlock.FACING;
-   }
+	protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+		builder.add(FACING);
+	}
+
+	public boolean canPathfindThrough(BlockState world, BlockView view, BlockPos pos, NavigationType env) {
+		return false;
+	}
 }

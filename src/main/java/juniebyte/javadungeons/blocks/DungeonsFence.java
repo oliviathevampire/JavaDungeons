@@ -8,12 +8,12 @@ import net.minecraft.sound.BlockSoundGroup;
 
 public class DungeonsFence extends FenceBlock {
 
-    // fence block
+	// fence block
 
-    public BlockItem blockItem;
+	public BlockItem blockItem;
 
-    public DungeonsFence(Material material, float hardness, float resistance, BlockSoundGroup sounds) {
-        super(FabricBlockSettings.of(material).strength(hardness, resistance).sounds(sounds));
-    }
+	public DungeonsFence(Material material, float hardness, float resistance, BlockSoundGroup sounds) {
+		super(FabricBlockSettings.of(material).strength(hardness, resistance).sounds(sounds));
+	}
 
 }

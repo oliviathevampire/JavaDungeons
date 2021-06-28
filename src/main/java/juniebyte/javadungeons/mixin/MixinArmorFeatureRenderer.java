@@ -32,15 +32,14 @@ public abstract class MixinArmorFeatureRenderer extends FeatureRenderer {
 	@Shadow
 	@Final
 	private static Map<String, Identifier> ARMOR_TEXTURE_CACHE;
-
-	public MixinArmorFeatureRenderer(FeatureRendererContext context) {
-		super(context);
-	}
-
 	@Unique
 	private LivingEntity storedEntity;
 	@Unique
 	private EquipmentSlot storedSlot;
+
+	public MixinArmorFeatureRenderer(FeatureRendererContext context) {
+		super(context);
+	}
 
 	@Inject(method = "render", at = @At("HEAD"))
 	private void storeEntity(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, LivingEntity livingEntity, float f, float g, float h, float j, float k, float l, CallbackInfo ci) {

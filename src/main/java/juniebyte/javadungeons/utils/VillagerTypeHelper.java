@@ -32,10 +32,14 @@ import java.util.Objects;
 public final class VillagerTypeHelper {
 	private static final Logger LOGGER = LogManager.getLogger();
 
+	private VillagerTypeHelper() {
+	}
+
 	/**
 	 * Creates a new villager type.
 	 *
 	 * @param id the id of the villager type
+	 *
 	 * @return a new villager type
 	 */
 	public static VillagerType create(Identifier id) {
@@ -47,7 +51,7 @@ public final class VillagerTypeHelper {
 	 * Maps a biome to villager type.
 	 * This mapping is used when a new villager entity is created.
 	 *
-	 * @param biomeKey the registry key of the biome
+	 * @param biomeKey     the registry key of the biome
 	 * @param villagerType the villager type
 	 */
 	public static void mapBiomeToVillagerType(RegistryKey<Biome> biomeKey, VillagerType villagerType) {
@@ -57,8 +61,5 @@ public final class VillagerTypeHelper {
 		if (VillagerTypeAccessor.getBiomeTypeToIdMap().put(biomeKey, villagerType) != null) {
 			LOGGER.debug("Overriding existing Biome -> VillagerType registration for Biome {}", biomeKey.getValue().toString());
 		}
-	}
-
-	private VillagerTypeHelper() {
 	}
 }

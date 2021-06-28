@@ -10,18 +10,17 @@ import net.minecraft.world.BlockView;
 
 public class DungeonsGlowingPlant extends PlantBlock {
 
-    // glowing plant block
+	// glowing plant block
 
-    public BlockItem blockItem;
+	protected static final VoxelShape SHAPE = Block.createCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 13.0D, 14.0D);
+	public BlockItem blockItem;
 
-    protected static final VoxelShape SHAPE = Block.createCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 13.0D, 14.0D);
+	public DungeonsGlowingPlant(Material material, float hardness, float resistance, BlockSoundGroup sounds) {
+		super(FabricBlockSettings.of(material).strength(hardness, resistance).sounds(sounds).lightLevel(12).nonOpaque().collidable(false));
+	}
 
-    public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, ShapeContext context) {
-        return SHAPE;
-    }
-
-    public DungeonsGlowingPlant(Material material, float hardness, float resistance, BlockSoundGroup sounds) {
-        super(FabricBlockSettings.of(material).strength(hardness, resistance).sounds(sounds).lightLevel(12).nonOpaque().collidable(false));
-    }
+	public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, ShapeContext context) {
+		return SHAPE;
+	}
 
 }

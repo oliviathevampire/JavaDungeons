@@ -7,8 +7,8 @@ import net.minecraft.sound.BlockSoundGroup;
 
 public class DungeonsSlab extends SlabBlock {
 
-    public DungeonsSlab(Material material, float hardness, float resistance, BlockSoundGroup sounds) {
-        super(FabricBlockSettings.of(material).strength(hardness, resistance).sounds(sounds));
-    }
+	public DungeonsSlab(Material material, float hardness, float resistance, BlockSoundGroup sounds) {
+		super(FabricBlockSettings.of(material).strength(hardness, resistance).sounds(sounds));
+	}
 
 }

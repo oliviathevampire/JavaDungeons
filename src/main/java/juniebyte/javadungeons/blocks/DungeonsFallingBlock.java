@@ -7,9 +7,9 @@ import net.minecraft.sound.BlockSoundGroup;
 
 public class DungeonsFallingBlock extends FallingBlock {
 
-    // generic falling block
-    public DungeonsFallingBlock(Material material, float hardness, float resistance, BlockSoundGroup sounds) {
-        super(FabricBlockSettings.of(material).strength(hardness, resistance).sounds(sounds));
-    }
+	// generic falling block
+	public DungeonsFallingBlock(Material material, float hardness, float resistance, BlockSoundGroup sounds) {
+		super(FabricBlockSettings.of(material).strength(hardness, resistance).sounds(sounds));
+	}
 
 }

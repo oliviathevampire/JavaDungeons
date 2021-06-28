@@ -18,6 +18,10 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 /**
  * EnchanterModel - bagu
  * Created using Tabula 8.0.0
+ * <p>
+ * This is a helper function from Tabula to set the rotation of model parts
+ * <p>
+ * This is a helper function from Tabula to set the rotation of model parts
  *//*
 
 @OnlyIn(Dist.CLIENT)
@@ -205,8 +209,8 @@ public class EnchanterModel<T extends EnchanterEntity> extends SegmentedModel<T>
 
     */
 /**
-     * This is a helper function from Tabula to set the rotation of model parts
-     *//*
+ * This is a helper function from Tabula to set the rotation of model parts
+ *//*
 
     public void setRotateAngle(ModelRenderer modelRenderer, float x, float y, float z) {
         modelRenderer.rotateAngleX = x;
