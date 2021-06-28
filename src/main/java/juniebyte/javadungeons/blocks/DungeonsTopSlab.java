@@ -4,7 +4,6 @@ import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.state.StateManager;
@@ -22,12 +21,6 @@ public class DungeonsTopSlab extends Block implements Waterloggable {
 	// slab block
 
 	public static final BooleanProperty WATERLOGGED;
-
-	static {
-		WATERLOGGED = Properties.WATERLOGGED;
-	}
-
-	public BlockItem blockItem;
 	public VoxelShape SHAPE = Block.createCuboidShape(0.0D, 8.0D, 0.0D, 16.0D, 16.0D, 16.0D);
 
 	public DungeonsTopSlab(Material material, float hardness, float resistance, BlockSoundGroup sounds) {
@@ -60,6 +53,10 @@ public class DungeonsTopSlab extends Block implements Waterloggable {
 	public BlockState getPlacementState(ItemPlacementContext ctx) {
 		FluidState fluidState = ctx.getWorld().getFluidState(ctx.getBlockPos());
 		return this.getDefaultState().with(WATERLOGGED, fluidState.isIn(FluidTags.WATER) && fluidState.getLevel() == 8);
+	}
+
+	static {
+		WATERLOGGED = Properties.WATERLOGGED;
 	}
 
 }

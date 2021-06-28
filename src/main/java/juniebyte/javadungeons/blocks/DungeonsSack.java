@@ -9,7 +9,6 @@ import net.minecraft.entity.mob.PiglinBrain;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.BlockSoundGroup;
@@ -35,16 +34,10 @@ import java.util.Random;
 public class DungeonsSack extends BlockWithEntity implements Waterloggable {
 
 	// sack block
-
 	public static final BooleanProperty WATERLOGGED;
 	protected static final VoxelShape SHAPE = Block.createCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 16.0D, 14.0D);
 	protected static final VoxelShape SMALL_SHAPE = Block.createCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 11.0D, 14.0D);
 
-	static {
-		WATERLOGGED = Properties.WATERLOGGED;
-	}
-
-	public BlockItem blockItem;
 	public boolean small;
 	public int size;
 
@@ -112,6 +105,10 @@ public class DungeonsSack extends BlockWithEntity implements Waterloggable {
 	@Nullable
 	public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
 		return new DungeonsSackBlockEntity(pos, state, size);
+	}
+
+	static {
+		WATERLOGGED = Properties.WATERLOGGED;
 	}
 
 }

@@ -2,7 +2,6 @@ package juniebyte.javadungeons.blocks;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
-import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.state.StateManager;
@@ -17,22 +16,11 @@ import net.minecraft.world.WorldView;
 public class DungeonsGravestone extends Block {
 
 	// gravestone block
-
 	public static final DirectionProperty FACING;
 	public static final VoxelShape N_SHAPE;
 	public static final VoxelShape S_SHAPE;
 	public static final VoxelShape E_SHAPE;
 	public static final VoxelShape W_SHAPE;
-
-	static {
-		FACING = HorizontalFacingBlock.FACING;
-		N_SHAPE = Block.createCuboidShape(0.0D, 0.0D, 11.0D, 16.0D, 18.0D, 16.0D);
-		S_SHAPE = Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 18.0D, 5.0D);
-		E_SHAPE = Block.createCuboidShape(0.0D, 0.0D, 0.0D, 5.0D, 18.0D, 16.0D);
-		W_SHAPE = Block.createCuboidShape(11.0D, 0.0D, 0.0D, 16.0D, 18.0D, 16.0D);
-	}
-
-	public BlockItem blockItem;
 
 	public DungeonsGravestone(Material material, float hardness, float resistance, BlockSoundGroup sounds) {
 		super(FabricBlockSettings.of(material).strength(hardness, resistance).sounds(sounds));
@@ -72,6 +60,14 @@ public class DungeonsGravestone extends Block {
 
 	protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
 		builder.add(FACING);
+	}
+
+	static {
+		FACING = HorizontalFacingBlock.FACING;
+		N_SHAPE = Block.createCuboidShape(0.0D, 0.0D, 11.0D, 16.0D, 18.0D, 16.0D);
+		S_SHAPE = Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 18.0D, 5.0D);
+		E_SHAPE = Block.createCuboidShape(0.0D, 0.0D, 0.0D, 5.0D, 18.0D, 16.0D);
+		W_SHAPE = Block.createCuboidShape(11.0D, 0.0D, 0.0D, 16.0D, 18.0D, 16.0D);
 	}
 
 }

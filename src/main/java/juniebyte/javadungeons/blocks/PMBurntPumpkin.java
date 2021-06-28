@@ -20,9 +20,6 @@ import java.util.Random;
 public class PMBurntPumpkin extends Block {
 
 	// generic block
-
-	public BlockItem blockItem;
-
 	public PMBurntPumpkin() {
 		super(FabricBlockSettings.of(Material.GOURD, MapColor.BROWN).strength(1.0F).sounds(BlockSoundGroup.WOOD));
 	}

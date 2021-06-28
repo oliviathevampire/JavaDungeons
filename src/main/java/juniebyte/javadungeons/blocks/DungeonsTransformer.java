@@ -7,7 +7,6 @@ import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.entity.ai.pathing.NavigationType;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandlerContext;
@@ -30,8 +29,6 @@ public class DungeonsTransformer extends Block {
 	static {
 		FACING = HorizontalFacingBlock.FACING;
 	}
-
-	public BlockItem blockItem;
 
 	public DungeonsTransformer() {
 		super(FabricBlockSettings.copy(Blocks.OBSIDIAN));
