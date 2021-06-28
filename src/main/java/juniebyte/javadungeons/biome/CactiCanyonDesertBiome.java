@@ -2,7 +2,7 @@ package juniebyte.javadungeons.biome;
 
 import juniebyte.javadungeons.content.CactiCanyonBlocks;
 import juniebyte.javadungeons.content.JDConfiguredFeatures;
-import net.minecraft.block.Blocks;
+import juniebyte.javadungeons.content.JDConfiguredSurfaceBuilders;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.sound.BiomeMoodSound;
@@ -21,31 +21,30 @@ import net.minecraft.world.gen.placer.DoublePlantPlacer;
 import net.minecraft.world.gen.placer.SimpleBlockPlacer;
 import net.minecraft.world.gen.stateprovider.SimpleBlockStateProvider;
 import net.minecraft.world.gen.surfacebuilder.ConfiguredSurfaceBuilder;
-import net.minecraft.world.gen.surfacebuilder.SurfaceBuilder;
-import net.minecraft.world.gen.surfacebuilder.TernarySurfaceConfig;
 
 import static juniebyte.javadungeons.JavaDungeons.MOD_ID;
 import static juniebyte.javadungeons.content.Biomes.calcSkyColor;
-import static juniebyte.javadungeons.content.ConfiguredSurfaceBuilders.newConfiguredSurfaceBuilder;
 
 public final class CactiCanyonDesertBiome extends Biome {
-	static final ConfiguredSurfaceBuilder<?> SURFACE_BUILDER = newConfiguredSurfaceBuilder("cacti_canyon_desert", new ConfiguredSurfaceBuilder<>(
-			SurfaceBuilder.DEFAULT,
-			new TernarySurfaceConfig(
-					CactiCanyonBlocks.CC_SAND.getDefaultState(),
-					CactiCanyonBlocks.CC_SANDSTONE.getDefaultState(),
-					Blocks.GRAVEL.getDefaultState()
-			)
-	));
-	static final Precipitation PRECIPATATION = Precipitation.NONE;
-	static final Category CATEGORY = Biome.Category.DESERT;
-	static final float DEPTH = 0.125F;
-	static final float SCALE = 0.05F;
-	static final float TEMPERATURE = 2.0F;
-	static final float DOWNFALL = 0.0F;
-	static final Biome.Weather WEATHER = new Biome.Weather(PRECIPATATION, TEMPERATURE, TemperatureModifier.NONE, DOWNFALL);
-	static final SpawnSettings.Builder SPAWN_SETTINGS = new SpawnSettings.Builder();
+	static final ConfiguredSurfaceBuilder<?> SURFACE_BUILDER = JDConfiguredSurfaceBuilders.CACTI_CANYON_DESERT;
+	static final Biome.Weather WEATHER = new Biome.Weather(
+			Precipitation.NONE, 2.0F,
+			TemperatureModifier.NONE, 0.0F
+	);
+	static final BiomeEffects.Builder BIOME_EFFECTS = new BiomeEffects.Builder()
+			.waterColor(4159204)
+			.waterFogColor(329011)
+			.grassColor(0x197862)
+			.foliageColor(0x197862)
+			.fogColor(12638463)
+			.skyColor(calcSkyColor(1.3F))
+			.moodSound(BiomeMoodSound.CAVE);
 	static final GenerationSettings.Builder GENERATION_SETTINGS = (new GenerationSettings.Builder()).surfaceBuilder(SURFACE_BUILDER);
+	static final SpawnSettings.Builder SPAWN_SETTINGS = new SpawnSettings.Builder();
+
+	public CactiCanyonDesertBiome() {
+		super(WEATHER, Biome.Category.DESERT, 0.125F, 0.05F, BIOME_EFFECTS.build(), GENERATION_SETTINGS.build(), SPAWN_SETTINGS.build());
+	}
 
 	static {
 		GENERATION_SETTINGS.structureFeature(ConfiguredStructureFeatures.VILLAGE_PLAINS);
@@ -54,6 +53,7 @@ public final class CactiCanyonDesertBiome extends Biome {
 		GENERATION_SETTINGS.structureFeature(Registry.register(BuiltinRegistries.CONFIGURED_STRUCTURE_FEATURE, new Identifier(MOD_ID, "cc_mineshaft"), StructureFeature.MINESHAFT.configure(new MineshaftFeatureConfig(0.004F, MineshaftFeature.Type.NORMAL))));
 		GENERATION_SETTINGS.structureFeature(ConfiguredStructureFeatures.STRONGHOLD);
 		GENERATION_SETTINGS.structureFeature(Registry.register(BuiltinRegistries.CONFIGURED_STRUCTURE_FEATURE, new Identifier(MOD_ID, "cc_desert_ruined_portal"), StructureFeature.RUINED_PORTAL.configure(new RuinedPortalFeatureConfig(RuinedPortalFeature.Type.DESERT))));
+
 		DefaultBiomeFeatures.addLandCarvers(GENERATION_SETTINGS);
 		DefaultBiomeFeatures.addDefaultUndergroundStructures(GENERATION_SETTINGS);
 		DefaultBiomeFeatures.addDesertLakes(GENERATION_SETTINGS);
@@ -99,9 +99,5 @@ public final class CactiCanyonDesertBiome extends Biome {
 		SPAWN_SETTINGS.spawn(SpawnGroup.MONSTER, new SpawnSettings.SpawnEntry(EntityType.ZOMBIE, 19, 4, 4));
 		SPAWN_SETTINGS.spawn(SpawnGroup.MONSTER, new SpawnSettings.SpawnEntry(EntityType.ZOMBIE_VILLAGER, 1, 1, 1));
 		SPAWN_SETTINGS.spawn(SpawnGroup.MONSTER, new SpawnSettings.SpawnEntry(EntityType.HUSK, 80, 4, 4));
-	}
-
-	public CactiCanyonDesertBiome() {
-		super(WEATHER, CATEGORY, DEPTH, SCALE, (new BiomeEffects.Builder()).waterColor(4159204).waterFogColor(329011).grassColor(0x197862).foliageColor(0x197862).fogColor(12638463).skyColor(calcSkyColor(0.8F)).moodSound(BiomeMoodSound.CAVE).build(), GENERATION_SETTINGS.build(), SPAWN_SETTINGS.build());
 	}
 }

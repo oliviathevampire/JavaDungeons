@@ -1,7 +1,7 @@
 package juniebyte.javadungeons.biome;
 
 import juniebyte.javadungeons.content.CactiCanyonBlocks;
-import juniebyte.javadungeons.content.ConfiguredSurfaceBuilders;
+import juniebyte.javadungeons.content.JDConfiguredSurfaceBuilders;
 import juniebyte.javadungeons.content.JDConfiguredFeatures;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
@@ -26,7 +26,7 @@ import static juniebyte.javadungeons.JavaDungeons.MOD_ID;
 import static juniebyte.javadungeons.content.Biomes.calcSkyColor;
 
 public class CactiCanyonBiome extends Biome {
-	static final ConfiguredSurfaceBuilder<?> SURFACE_BUILDER = ConfiguredSurfaceBuilders.CACTI_CANYON;
+	static final ConfiguredSurfaceBuilder<?> SURFACE_BUILDER = JDConfiguredSurfaceBuilders.CACTI_CANYON;
 	static final Biome.Weather WEATHER = new Biome.Weather(
 			Precipitation.NONE, 2.0F,
 			TemperatureModifier.NONE, 0.0F
@@ -45,16 +45,6 @@ public class CactiCanyonBiome extends Biome {
 
 	public CactiCanyonBiome() {
 		super(WEATHER, Biome.Category.MESA, 0.1F, 0.2F, BIOME_EFFECTS.build(), GENERATION_SETTINGS.build(), SPAWN_SETTINGS.build());
-	}
-
-	@Override
-	public int getGrassColorAt(double x, double z) {
-		return 0x71B518;
-	}
-
-	@Override
-	public int getFoliageColor() {
-		return 0x71B518;
 	}
 
 	static {

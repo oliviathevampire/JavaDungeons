@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import juniebyte.javadungeons.content.GenericBlocks;
 import juniebyte.javadungeons.content.JDConfiguredFeatures;
+import juniebyte.javadungeons.content.JDConfiguredSurfaceBuilders;
 import juniebyte.javadungeons.content.PumpkinPasturesBlocks;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
@@ -12,10 +13,7 @@ import net.minecraft.sound.BiomeMoodSound;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.BiomeEffects;
-import net.minecraft.world.biome.GenerationSettings;
-import net.minecraft.world.biome.SpawnSettings;
+import net.minecraft.world.biome.*;
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.decorator.ChanceDecoratorConfig;
 import net.minecraft.world.gen.decorator.CountExtraDecoratorConfig;
@@ -24,32 +22,30 @@ import net.minecraft.world.gen.feature.*;
 import net.minecraft.world.gen.placer.SimpleBlockPlacer;
 import net.minecraft.world.gen.stateprovider.SimpleBlockStateProvider;
 import net.minecraft.world.gen.surfacebuilder.ConfiguredSurfaceBuilder;
-import net.minecraft.world.gen.surfacebuilder.SurfaceBuilder;
-import net.minecraft.world.gen.surfacebuilder.TernarySurfaceConfig;
 
 import static juniebyte.javadungeons.JavaDungeons.MOD_ID;
 import static juniebyte.javadungeons.content.Biomes.calcSkyColor;
-import static juniebyte.javadungeons.content.ConfiguredSurfaceBuilders.newConfiguredSurfaceBuilder;
 
 public class PumpkinPasturesBiome extends Biome {
-	static final ConfiguredSurfaceBuilder<?> SURFACE_BUILDER = newConfiguredSurfaceBuilder("pumpkin_pastures", new ConfiguredSurfaceBuilder<>(SurfaceBuilder.DEFAULT,
-			new TernarySurfaceConfig(
-					GenericBlocks.GRASS_BLOCK.getDefaultState(),
-					GenericBlocks.DIRT.getDefaultState(),
-					GenericBlocks.DIRT.getDefaultState()
-			))
+	static final ConfiguredSurfaceBuilder<?> SURFACE_BUILDER = JDConfiguredSurfaceBuilders.PUMPKIN_PASTURES;
+	static final Biome.Weather WEATHER = new Biome.Weather(
+			Precipitation.RAIN, 0.6F,
+			TemperatureModifier.NONE, 0.6F
 	);
-	static final Precipitation PRECIPATATION = Precipitation.RAIN;
-	static final Category CATEGORY = Category.PLAINS;
-	static final float DEPTH = 0.125F;
-	static final float SCALE = 0.05F;
-	static final float TEMPERATURE = 0.8F;
-	static final float DOWNFALL = 0.4F;
-	static final int WATER_COLOR = 4159204;
-	static final int WATER_FOG_COLOR = 329011;
-	static final Biome.Weather WEATHER = new Biome.Weather(PRECIPATATION, TEMPERATURE, TemperatureModifier.NONE, DOWNFALL);
+	static final BiomeEffects.Builder BIOME_EFFECTS = new BiomeEffects.Builder()
+			.waterColor(4159204)
+			.waterFogColor(329011)
+			.grassColor(0xCD934C)
+			.foliageColor(0xCD934C)
+			.fogColor(12638463)
+			.skyColor(calcSkyColor(0.6F))
+			.moodSound(BiomeMoodSound.CAVE);
 	static final SpawnSettings.Builder SPAWN_SETTINGS = new SpawnSettings.Builder();
 	static final GenerationSettings.Builder GENERATION_SETTINGS = (new GenerationSettings.Builder()).surfaceBuilder(SURFACE_BUILDER);
+
+	public PumpkinPasturesBiome() {
+		super(WEATHER, Category.FOREST, 0.125F, 0.05F, BIOME_EFFECTS.build(), GENERATION_SETTINGS.build(), SPAWN_SETTINGS.build());
+	}
 
 	static {
 		GENERATION_SETTINGS.structureFeature(ConfiguredStructureFeatures.MINESHAFT);
@@ -162,9 +158,5 @@ public class PumpkinPasturesBiome extends Biome {
 		SPAWN_SETTINGS.spawn(SpawnGroup.MONSTER, new SpawnSettings.SpawnEntry(EntityType.SLIME, 100, 4, 4));
 		SPAWN_SETTINGS.spawn(SpawnGroup.MONSTER, new SpawnSettings.SpawnEntry(EntityType.ENDERMAN, 10, 1, 4));
 		SPAWN_SETTINGS.spawn(SpawnGroup.MONSTER, new SpawnSettings.SpawnEntry(EntityType.WITCH, 5, 1, 1));
-	}
-
-	public PumpkinPasturesBiome() {
-		super(WEATHER, CATEGORY, DEPTH, SCALE, (new BiomeEffects.Builder()).waterColor(WATER_COLOR).waterFogColor(WATER_FOG_COLOR).grassColor(0xCD934C).foliageColor(0xCD934C).fogColor(12638463).skyColor(calcSkyColor(0.8F)).moodSound(BiomeMoodSound.CAVE).build(), GENERATION_SETTINGS.build(), SPAWN_SETTINGS.build());
 	}
 }

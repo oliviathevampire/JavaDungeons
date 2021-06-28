@@ -1,7 +1,7 @@
 package juniebyte.javadungeons.biome;
 
 import juniebyte.javadungeons.content.JDConfiguredFeatures;
-import juniebyte.javadungeons.content.SoggySwampBlocks;
+import juniebyte.javadungeons.content.JDConfiguredSurfaceBuilders;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.sound.BiomeMoodSound;
@@ -19,33 +19,32 @@ import net.minecraft.world.gen.decorator.WaterDepthThresholdDecoratorConfig;
 import net.minecraft.world.gen.feature.*;
 import net.minecraft.world.gen.feature.MineshaftFeature.Type;
 import net.minecraft.world.gen.surfacebuilder.ConfiguredSurfaceBuilder;
-import net.minecraft.world.gen.surfacebuilder.SurfaceBuilder;
-import net.minecraft.world.gen.surfacebuilder.TernarySurfaceConfig;
 
 import static juniebyte.javadungeons.JavaDungeons.MOD_ID;
 import static juniebyte.javadungeons.content.Biomes.calcSkyColor;
-import static juniebyte.javadungeons.content.ConfiguredSurfaceBuilders.newConfiguredSurfaceBuilder;
 
 public final class SoggySwampBiome extends Biome {
 
-	static final ConfiguredSurfaceBuilder<?> SURFACE_BUILDER = newConfiguredSurfaceBuilder("soggy_swamp", new ConfiguredSurfaceBuilder<>(SurfaceBuilder.DEFAULT,
-			new TernarySurfaceConfig(
-					SoggySwampBlocks.SS_GRASS_BLOCK.getDefaultState(),
-					SoggySwampBlocks.SS_DIRT.getDefaultState(),
-					SoggySwampBlocks.SS_DIRT.getDefaultState()
-			))
+	static final ConfiguredSurfaceBuilder<?> SURFACE_BUILDER = JDConfiguredSurfaceBuilders.SOGGY_SWAMP;
+	static final Biome.Weather WEATHER = new Biome.Weather(
+			Precipitation.RAIN, 0.8F,
+			TemperatureModifier.NONE, 0.9F
 	);
-	static final Precipitation PRECIPATATION = Precipitation.RAIN;
-	static final Category CATEGORY = Category.SWAMP;
-	static final float DEPTH = - 0.05F;
-	static final float SCALE = 0.1F;
-	static final float TEMPERATURE = 0.8F;
-	static final float DOWNFALL = 0.9F;
-	static final int WATER_COLOR = 6388580;
-	static final int WATER_FOG_COLOR = 2302743;
-	static final Biome.Weather WEATHER = new Biome.Weather(PRECIPATATION, TEMPERATURE, TemperatureModifier.NONE, DOWNFALL);
-	static final SpawnSettings.Builder SPAWN_SETTINGS = new SpawnSettings.Builder();
+	static final BiomeEffects.Builder BIOME_EFFECTS = new BiomeEffects.Builder()
+			.waterColor(6388580)
+			.waterFogColor(2302743)
+			.grassColor(0x6a7565)
+			.grassColorModifier(BiomeEffects.GrassColorModifier.SWAMP)
+			.foliageColor(0x6c6e4f)
+			.fogColor(12638463)
+			.skyColor(calcSkyColor(0.25F))
+			.moodSound(BiomeMoodSound.CAVE);
 	static final GenerationSettings.Builder GENERATION_SETTINGS = (new GenerationSettings.Builder()).surfaceBuilder(SURFACE_BUILDER);
+	static final SpawnSettings.Builder SPAWN_SETTINGS = new SpawnSettings.Builder();
+
+	public SoggySwampBiome(float depth, float scale) {
+		super(WEATHER, Category.SWAMP, depth, scale, BIOME_EFFECTS.build(), GENERATION_SETTINGS.build(), SPAWN_SETTINGS.build());
+	}
 
 	static {
 		GENERATION_SETTINGS.structureFeature(StructureFeature.SWAMP_HUT.configure(FeatureConfig.DEFAULT));
@@ -99,9 +98,5 @@ public final class SoggySwampBiome extends Biome {
 		SPAWN_SETTINGS.spawn(SpawnGroup.MONSTER, new SpawnSettings.SpawnEntry(EntityType.ENDERMAN, 10, 1, 4));
 		SPAWN_SETTINGS.spawn(SpawnGroup.MONSTER, new SpawnSettings.SpawnEntry(EntityType.WITCH, 5, 1, 1));
 		SPAWN_SETTINGS.spawn(SpawnGroup.MONSTER, new SpawnSettings.SpawnEntry(EntityType.SLIME, 1, 1, 1));
-	}
-
-	public SoggySwampBiome() {
-		super(WEATHER, CATEGORY, DEPTH, SCALE, (new BiomeEffects.Builder()).waterColor(WATER_COLOR).waterFogColor(WATER_FOG_COLOR).foliageColor(0x6c6e4f).grassColor(0x6a7565).fogColor(12638463).skyColor(calcSkyColor(0.8F)).moodSound(BiomeMoodSound.CAVE).build(), GENERATION_SETTINGS.build(), SPAWN_SETTINGS.build());
 	}
 }

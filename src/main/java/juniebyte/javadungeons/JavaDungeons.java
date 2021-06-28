@@ -74,8 +74,8 @@ public class JavaDungeons implements ModInitializer {
 		LOGGER.info("JavaDungeons registering worldgen!");
 		Features.init();
 		JDConfiguredFeatures.init();
-		SurfaceBuilders.init();
-		ConfiguredSurfaceBuilders.init();
+		JDSurfaceBuilders.init();
+		JDConfiguredSurfaceBuilders.init();
 		StructureFeatures.init();
 		StructureFeatures.setupStructures();
 		ConfiguredStructureFeatures.init();

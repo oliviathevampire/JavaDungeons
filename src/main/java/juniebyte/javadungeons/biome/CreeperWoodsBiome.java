@@ -30,7 +30,7 @@ import static juniebyte.javadungeons.JavaDungeons.MOD_ID;
 import static juniebyte.javadungeons.content.Biomes.calcSkyColor;
 
 public class CreeperWoodsBiome extends Biome {
-	static final ConfiguredSurfaceBuilder<?> SURFACE_BUILDER = ConfiguredSurfaceBuilders.CREEPER_WOODS;
+	static final ConfiguredSurfaceBuilder<?> SURFACE_BUILDER = JDConfiguredSurfaceBuilders.CREEPER_WOODS;
 	static final Biome.Weather WEATHER = new Biome.Weather(
 			Precipitation.RAIN, 0.7F,
 			TemperatureModifier.NONE, 0.8F

@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableSet;
 import juniebyte.javadungeons.JavaDungeons;
 import juniebyte.javadungeons.content.GenericBlocks;
 import juniebyte.javadungeons.content.JDConfiguredFeatures;
+import juniebyte.javadungeons.content.JDConfiguredSurfaceBuilders;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.sound.BiomeMoodSound;
@@ -24,29 +25,30 @@ import net.minecraft.world.gen.feature.*;
 import net.minecraft.world.gen.placer.SimpleBlockPlacer;
 import net.minecraft.world.gen.stateprovider.SimpleBlockStateProvider;
 import net.minecraft.world.gen.surfacebuilder.ConfiguredSurfaceBuilder;
-import net.minecraft.world.gen.surfacebuilder.SurfaceBuilder;
-import net.minecraft.world.gen.surfacebuilder.TernarySurfaceConfig;
 
 import static juniebyte.javadungeons.content.Biomes.calcSkyColor;
-import static juniebyte.javadungeons.content.ConfiguredSurfaceBuilders.newConfiguredSurfaceBuilder;
 
 public class DungeonsPlainsBiome extends Biome {
-	static final ConfiguredSurfaceBuilder<?> SURFACE_BUILDER = newConfiguredSurfaceBuilder("plains", new ConfiguredSurfaceBuilder<>(SurfaceBuilder.DEFAULT,
-			new TernarySurfaceConfig(
-					GenericBlocks.GRASS_BLOCK.getDefaultState(),
-					GenericBlocks.DIRT.getDefaultState(),
-					GenericBlocks.DIRT.getDefaultState()
-			))
+	static final ConfiguredSurfaceBuilder<?> SURFACE_BUILDER = JDConfiguredSurfaceBuilders.DUNGEONS_PLAINS;
+	static final Weather WEATHER = new Weather(
+			Precipitation.RAIN, 0.8F,
+			TemperatureModifier.NONE, 0.4F
 	);
-	static final Precipitation PRECIPATATION = Precipitation.RAIN;
-	static final Category CATEGORY = Category.PLAINS;
-	static final float DEPTH = 0.125F;
-	static final float SCALE = 0.05F;
-	static final float TEMPERATURE = 0.8F;
-	static final float DOWNFALL = 0.4F;
-	static final Biome.Weather WEATHER = new Biome.Weather(PRECIPATATION, TEMPERATURE, TemperatureModifier.NONE, DOWNFALL);
+	static final BiomeEffects.Builder BIOME_EFFECTS = new BiomeEffects.Builder()
+			.waterColor(4159204)
+			.waterFogColor(329011)
+			.grassColor(0x2bada6)
+			.foliageColor(0x2bcca6)
+			.fogColor(12638463)
+			.skyColor(calcSkyColor(0.25F))
+			.moodSound(BiomeMoodSound.CAVE);
+	static final GenerationSettings.Builder GENERATION_SETTINGS = new GenerationSettings.Builder()
+			.surfaceBuilder(SURFACE_BUILDER);
 	static final SpawnSettings.Builder SPAWN_SETTINGS = new SpawnSettings.Builder();
-	static final GenerationSettings.Builder GENERATION_SETTINGS = (new GenerationSettings.Builder()).surfaceBuilder(SURFACE_BUILDER);
+
+	public DungeonsPlainsBiome() {
+		super(WEATHER, Category.PLAINS, 0.125F, 0.05F, BIOME_EFFECTS.build(), GENERATION_SETTINGS.build(), SPAWN_SETTINGS.build());
+	}
 
 	static {
 		GENERATION_SETTINGS.structureFeature(Registry.register(BuiltinRegistries.CONFIGURED_STRUCTURE_FEATURE, new Identifier(JavaDungeons.MOD_ID, "plains_village"), StructureFeature.VILLAGE.configure(new StructurePoolFeatureConfig(() -> PlainsVillageData.STRUCTURE_POOLS, 6))));
@@ -117,17 +119,4 @@ public class DungeonsPlainsBiome extends Biome {
 		SPAWN_SETTINGS.spawn(SpawnGroup.MONSTER, new SpawnSettings.SpawnEntry(EntityType.WITCH, 5, 1, 1));
 	}
 
-	public DungeonsPlainsBiome() {
-		super(WEATHER, CATEGORY, DEPTH, SCALE, (new BiomeEffects.Builder()).waterColor(4159204).waterFogColor(329011).grassColor(0x197862).foliageColor(0x197862).fogColor(12638463).skyColor(calcSkyColor(0.8F)).moodSound(BiomeMoodSound.CAVE).build(), GENERATION_SETTINGS.build(), SPAWN_SETTINGS.build());
-	}
-
-	@Override
-	public int getGrassColorAt(double x, double z) {
-		return 0x638F42;
-	}
-
-	@Override
-	public int getFoliageColor() {
-		return 0x668E38;
-	}
 }

@@ -21,6 +21,7 @@ public class Biomes {
 	public static CactiCanyonBiome CACTI_CANYON_BIOME;
 	public static CactiCanyonDesertBiome CACTI_CANYON_DESERT_BIOME;
 	public static SoggySwampBiome SOGGY_SWAMP_BIOME;
+	public static SoggySwampBiome SOGGY_SWAMP_HILLS_BIOME;
 
 	public static RegistryKey<Biome> CREEPER_WOODS_BIOME_KEY = RegistryKey.of(Registry.BIOME_KEY, new Identifier(MOD_ID, "creeper_woods"));
 	public static RegistryKey<Biome> CREEPER_FIELDS_BIOME_KEY = RegistryKey.of(Registry.BIOME_KEY, new Identifier(MOD_ID, "creeper_fields"));
@@ -29,6 +30,7 @@ public class Biomes {
 	public static RegistryKey<Biome> CACTI_CANYON_BIOME_KEY = RegistryKey.of(Registry.BIOME_KEY, new Identifier(MOD_ID, "cacti_canyon"));
 	public static RegistryKey<Biome> CACTI_CANYON_DESERT_BIOME_KEY = RegistryKey.of(Registry.BIOME_KEY, new Identifier(MOD_ID, "cacti_canyon_desert"));
 	public static RegistryKey<Biome> SOGGY_SWAMP_BIOME_KEY = RegistryKey.of(Registry.BIOME_KEY, new Identifier(MOD_ID, "soggy_swamp"));
+	public static RegistryKey<Biome> SOGGY_SWAMP_BIOME_HILLS_KEY = RegistryKey.of(Registry.BIOME_KEY, new Identifier(MOD_ID, "soggy_swamp_hills"));
 
 	public static void init() {
 		// register biomes
@@ -38,7 +40,8 @@ public class Biomes {
 		DUNGEONS_PLAINS_BIOME = Registry.register(BuiltinRegistries.BIOME, DUNGEONS_PLAINS_BIOME_KEY.getValue(), new DungeonsPlainsBiome());
 		CACTI_CANYON_BIOME = Registry.register(BuiltinRegistries.BIOME, CACTI_CANYON_BIOME_KEY.getValue(), new CactiCanyonBiome());
 		CACTI_CANYON_DESERT_BIOME = Registry.register(BuiltinRegistries.BIOME, CACTI_CANYON_DESERT_BIOME_KEY.getValue(), new CactiCanyonDesertBiome());
-		SOGGY_SWAMP_BIOME = Registry.register(BuiltinRegistries.BIOME, SOGGY_SWAMP_BIOME_KEY.getValue(), new SoggySwampBiome());
+		SOGGY_SWAMP_BIOME = Registry.register(BuiltinRegistries.BIOME, SOGGY_SWAMP_BIOME_KEY.getValue(), new SoggySwampBiome(/*0.05F, 0.1F*/-0.2F, 0.1F));
+		SOGGY_SWAMP_HILLS_BIOME = Registry.register(BuiltinRegistries.BIOME, SOGGY_SWAMP_BIOME_HILLS_KEY.getValue(), new SoggySwampBiome(/*0.05F, 0.1F*/-0.1F, 0.3F));
 
 		// add biomes to worldgen
 		OverworldBiomes.addContinentalBiome(CREEPER_WOODS_BIOME_KEY, OverworldClimate.COOL, 2D);
