@@ -42,8 +42,8 @@ public final class CactiCanyonDesertBiome extends Biome {
 	static final GenerationSettings.Builder GENERATION_SETTINGS = (new GenerationSettings.Builder()).surfaceBuilder(SURFACE_BUILDER);
 	static final SpawnSettings.Builder SPAWN_SETTINGS = new SpawnSettings.Builder();
 
-	public CactiCanyonDesertBiome() {
-		super(WEATHER, Biome.Category.DESERT, 0.125F, 0.05F, BIOME_EFFECTS.build(), GENERATION_SETTINGS.build(), SPAWN_SETTINGS.build());
+	public CactiCanyonDesertBiome(float depth, float scale) {
+		super(WEATHER, Biome.Category.DESERT, depth, scale, BIOME_EFFECTS.build(), GENERATION_SETTINGS.build(), SPAWN_SETTINGS.build());
 	}
 
 	static {

@@ -27,7 +27,6 @@ import static juniebyte.javadungeons.JavaDungeons.MOD_ID;
 import static juniebyte.javadungeons.content.Biomes.calcSkyColor;
 
 public class PumpkinPasturesBiome extends Biome {
-	static final ConfiguredSurfaceBuilder<?> SURFACE_BUILDER = JDConfiguredSurfaceBuilders.PUMPKIN_PASTURES;
 	static final Biome.Weather WEATHER = new Biome.Weather(
 			Precipitation.RAIN, 0.6F,
 			TemperatureModifier.NONE, 0.6F
@@ -40,8 +39,10 @@ public class PumpkinPasturesBiome extends Biome {
 			.fogColor(12638463)
 			.skyColor(calcSkyColor(0.6F))
 			.moodSound(BiomeMoodSound.CAVE);
+	static final ConfiguredSurfaceBuilder<?> SURFACE_BUILDER = JDConfiguredSurfaceBuilders.PUMPKIN_PASTURES;
+	static final GenerationSettings.Builder GENERATION_SETTINGS = new GenerationSettings.Builder()
+			.surfaceBuilder(SURFACE_BUILDER);
 	static final SpawnSettings.Builder SPAWN_SETTINGS = new SpawnSettings.Builder();
-	static final GenerationSettings.Builder GENERATION_SETTINGS = (new GenerationSettings.Builder()).surfaceBuilder(SURFACE_BUILDER);
 
 	public PumpkinPasturesBiome() {
 		super(WEATHER, Category.FOREST, 0.125F, 0.05F, BIOME_EFFECTS.build(), GENERATION_SETTINGS.build(), SPAWN_SETTINGS.build());

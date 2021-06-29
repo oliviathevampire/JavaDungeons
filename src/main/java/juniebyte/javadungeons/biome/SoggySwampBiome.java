@@ -25,7 +25,6 @@ import static juniebyte.javadungeons.content.Biomes.calcSkyColor;
 
 public final class SoggySwampBiome extends Biome {
 
-	static final ConfiguredSurfaceBuilder<?> SURFACE_BUILDER = JDConfiguredSurfaceBuilders.SOGGY_SWAMP;
 	static final Biome.Weather WEATHER = new Biome.Weather(
 			Precipitation.RAIN, 0.8F,
 			TemperatureModifier.NONE, 0.9F
@@ -39,7 +38,9 @@ public final class SoggySwampBiome extends Biome {
 			.fogColor(12638463)
 			.skyColor(calcSkyColor(0.25F))
 			.moodSound(BiomeMoodSound.CAVE);
-	static final GenerationSettings.Builder GENERATION_SETTINGS = (new GenerationSettings.Builder()).surfaceBuilder(SURFACE_BUILDER);
+	static final ConfiguredSurfaceBuilder<?> SURFACE_BUILDER = JDConfiguredSurfaceBuilders.SOGGY_SWAMP;
+	static final GenerationSettings.Builder GENERATION_SETTINGS = new GenerationSettings.Builder()
+			.surfaceBuilder(SURFACE_BUILDER);
 	static final SpawnSettings.Builder SPAWN_SETTINGS = new SpawnSettings.Builder();
 
 	public SoggySwampBiome(float depth, float scale) {

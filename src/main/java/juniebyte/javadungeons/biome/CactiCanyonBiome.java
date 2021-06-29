@@ -26,7 +26,6 @@ import static juniebyte.javadungeons.JavaDungeons.MOD_ID;
 import static juniebyte.javadungeons.content.Biomes.calcSkyColor;
 
 public class CactiCanyonBiome extends Biome {
-	static final ConfiguredSurfaceBuilder<?> SURFACE_BUILDER = JDConfiguredSurfaceBuilders.CACTI_CANYON;
 	static final Biome.Weather WEATHER = new Biome.Weather(
 			Precipitation.NONE, 2.0F,
 			TemperatureModifier.NONE, 0.0F
@@ -39,6 +38,7 @@ public class CactiCanyonBiome extends Biome {
 			.fogColor(12638463)
 			.skyColor(calcSkyColor(0.8F))
 			.moodSound(BiomeMoodSound.CAVE);
+	static final ConfiguredSurfaceBuilder<?> SURFACE_BUILDER = JDConfiguredSurfaceBuilders.CACTI_CANYON;
 	static final GenerationSettings.Builder GENERATION_SETTINGS = new GenerationSettings.Builder()
 			.surfaceBuilder(SURFACE_BUILDER);
 	static final SpawnSettings.Builder SPAWN_SETTINGS = new SpawnSettings.Builder();

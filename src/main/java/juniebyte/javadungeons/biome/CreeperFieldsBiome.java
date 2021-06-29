@@ -27,7 +27,6 @@ import static juniebyte.javadungeons.JavaDungeons.MOD_ID;
 import static juniebyte.javadungeons.content.Biomes.calcSkyColor;
 
 public class CreeperFieldsBiome extends Biome {
-	static final ConfiguredSurfaceBuilder<?> SURFACE_BUILDER = JDConfiguredSurfaceBuilders.CREEPER_WOODS;
 	static final Weather WEATHER = new Weather(
 			Precipitation.RAIN, 0.8F,
 			TemperatureModifier.NONE, 0.4F
@@ -40,6 +39,7 @@ public class CreeperFieldsBiome extends Biome {
 			.fogColor(12638463)
 			.skyColor(calcSkyColor(0.25F))
 			.moodSound(BiomeMoodSound.CAVE);
+	static final ConfiguredSurfaceBuilder<?> SURFACE_BUILDER = JDConfiguredSurfaceBuilders.CREEPER_WOODS;
 	static final GenerationSettings.Builder GENERATION_SETTINGS = new GenerationSettings.Builder()
 			.surfaceBuilder(SURFACE_BUILDER);
 	static final SpawnSettings.Builder SPAWN_SETTINGS = new SpawnSettings.Builder();
