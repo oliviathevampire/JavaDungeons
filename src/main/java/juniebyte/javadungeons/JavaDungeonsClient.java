@@ -46,11 +46,187 @@ public class JavaDungeonsClient implements ClientModInitializer {
 
 	private static final ItemColorProvider GRASS_ITEM_COLORS = (item, layer) -> GrassColors.getColor(0.5D, 1.0D);
 
-	public static void setupFluidRendering(final Fluid still, final Fluid flowing, final Identifier textureFluidId, final int color) {
+    public void onInitializeClient() {
+        ColorProviderRegistry.BLOCK.register(
+            GRASS_BLOCK_COLORS,
+            GenericBlocks.SHORT_GRASS,
+            GenericBlocks.FERN,
+            GenericBlocks.DENSE_GRASSY_DIRT,
+            GenericBlocks.GRASSY_DIRT,
+            GenericBlocks.GRASS_BLOCK,
+            GenericBlocks.ROCKY_GRASSY_DIRT,
+            CreeperWoodsBlocks.CW_GRASS_BLOCK,
+            CreeperWoodsBlocks.CW_GRASSY_DIRT,
+            CreeperWoodsBlocks.CW_DENSE_GRASSY_DIRT,
+            CreeperWoodsBlocks.CW_ROCKY_GRASSY_DIRT,
+            CactiCanyonBlocks.CC_GRASS_BLOCK,
+            CactiCanyonBlocks.CC_GRASSY_DIRT,
+            CactiCanyonBlocks.CC_DENSE_GRASSY_DIRT
+        );
+
+        ColorProviderRegistry.ITEM.register(
+            GRASS_ITEM_COLORS,
+            GenericBlocks.SHORT_GRASS,
+            GenericBlocks.FERN,
+            GenericBlocks.DENSE_GRASSY_DIRT,
+            GenericBlocks.GRASSY_DIRT,
+            GenericBlocks.GRASS_BLOCK,
+            GenericBlocks.ROCKY_GRASSY_DIRT,
+            CreeperWoodsBlocks.CW_GRASS_BLOCK,
+            CreeperWoodsBlocks.CW_GRASSY_DIRT,
+            CreeperWoodsBlocks.CW_DENSE_GRASSY_DIRT,
+            CreeperWoodsBlocks.CW_ROCKY_GRASSY_DIRT,
+            CactiCanyonBlocks.CC_GRASS_BLOCK,
+            CactiCanyonBlocks.CC_GRASSY_DIRT,
+            CactiCanyonBlocks.CC_DENSE_GRASSY_DIRT
+        );
+
+        // register render layers
+        BlockRenderLayerMap.INSTANCE.putBlocks(
+            CUTOUT_BLOCK_LAYER,
+            GenericBlocks.SHORT_GRASS,
+            GenericBlocks.FERN,
+            GenericBlocks.BERRY_BUSH_BLOCK,
+            GenericBlocks.WATER_PLANT,
+            GenericBlocks.DENSE_GRASSY_DIRT,
+            GenericBlocks.GRASSY_DIRT,
+            GenericBlocks.ROCKY_GRASSY_DIRT,
+            GenericBlocks.GRASS_BLOCK,
+            GenericBlocks.SHRUB,
+            GenericBlocks.RIPPED_BANNER,
+            GenericBlocks.TENT,
+            GenericBlocks.DUNGEONS_LANTERN,
+            GenericBlocks.HANGING_ROSES,
+            GenericBlocks.YELLOW_TULIP,
+            GenericBlocks.UNLIT_BRAZIER,
+            GenericBlocks.LIT_BRAZIER,
+            GenericBlocks.GREEN_LIT_BRAZIER,
+            GenericBlocks.TRAY,
+            GenericBlocks.TEAPOT,
+            GenericBlocks.CHAINS,
+            CreeperWoodsBlocks.CW_GRASS_BLOCK,
+            CreeperWoodsBlocks.CW_GRASSY_DIRT,
+            CreeperWoodsBlocks.CW_DENSE_GRASSY_DIRT,
+            CreeperWoodsBlocks.CW_SHRUB,
+            CreeperWoodsBlocks.CW_POP_FLOWER,
+            CreeperWoodsBlocks.CW_ROCKY_GRASSY_DIRT,
+            CreeperWoodsBlocks.CW_FLOWER_PATCH,
+            PumpkinPasturesBlocks.PM_RED_AUTUMNAL_LEAVES,
+            PumpkinPasturesBlocks.PM_YELLOW_AUTUMNAL_LEAVES,
+            PumpkinPasturesBlocks.PM_CHARRED_GRASS,
+            PumpkinPasturesBlocks.PM_SHRUB,
+            PumpkinPasturesBlocks.PM_DEAD_SAPLING,
+            PumpkinPasturesBlocks.PM_FERN,
+            PumpkinPasturesBlocks.PM_RED_AUTUMNAL_SAPLING,
+            PumpkinPasturesBlocks.PM_YELLOW_AUTUMNAL_SAPLING,
+            CactiCanyonBlocks.CC_CACTUS,
+            CactiCanyonBlocks.CC_SMALL_CACTUS,
+            CactiCanyonBlocks.CC_FERN,
+            CactiCanyonBlocks.CC_FLOWERS,
+            CactiCanyonBlocks.CC_YUCCA,
+            CactiCanyonBlocks.CC_TALL_CACTUS,
+            CactiCanyonBlocks.CC_GRASS_BLOCK,
+            CactiCanyonBlocks.CC_GRASSY_DIRT,
+            CactiCanyonBlocks.CC_DENSE_GRASSY_DIRT,
+            CactiCanyonBlocks.CC_DESERT_GRASS,
+            RedstoneMinesBlocks.RM_SHRUB,
+            SoggySwampBlocks.SS_SWAMP_SAPLING,
+            DingyJungleBlocks.DJ_RED_FERN,
+            DingyJungleBlocks.DJ_GRASS,
+            DingyJungleBlocks.DJ_SHRUB,
+            DingyJungleBlocks.DJ_DEAD_SHRUB,
+            DingyJungleBlocks.DJ_BUSH,
+            DingyJungleBlocks.DJ_TALL_FERN,
+            DingyJungleBlocks.DJ_JUNGLE_LEAVES
+        );
+        BlockRenderLayerMap.INSTANCE.putBlocks(
+            TRANSLUCENT_BLOCK_LAYER,
+            GenericBlocks.GLASS,
+            GenericBlocks.BLUE_GLASS,
+            GenericBlocks.BROWN_GLASS,
+            GenericBlocks.BLACK_GLASS,
+            GenericBlocks.GREEN_GLASS,
+            GenericBlocks.YELLOW_GLASS,
+            GenericBlocks.RED_GLASS,
+            GenericBlocks.LIME_GLASS,
+            GenericBlocks.LIGHT_GRAY_GLASS,
+            GenericBlocks.PINK_GLASS,
+            GenericBlocks.MAGENTA_GLASS,
+            GenericBlocks.LIGHT_BLUE_GLASS,
+            GenericBlocks.ORANGE_GLASS,
+            GenericBlocks.GRAY_GLASS,
+            GenericBlocks.PURPLE_GLASS,
+            GenericBlocks.CYAN_GLASS,
+            CreeperWoodsBlocks.CW_GLOW_MUSHROOM
+        );
+        // set up fluid rendering
+        BlockRenderLayerMap.INSTANCE.putFluids(
+            TRANSLUCENT_BLOCK_LAYER,
+            Fluids.DUNGEONS_WATER_FLOWING,
+            Fluids.DUNGEONS_WATER_STILL,
+            Fluids.SOGGY_SWAMP_WATER_FLOWING,
+            Fluids.SOGGY_SWAMP_WATER_STILL
+        );
+
+        // set up particles
+        ParticleFactoryRegistry.getInstance().register(Particles.GREEN_FLAME, GreenFlameParticle.Factory::new);
+        ClientSpriteRegistryCallback.event(SpriteAtlasTexture.PARTICLE_ATLAS_TEXTURE).register((atlasTexture, registry) -> {
+            registry.register(new Identifier(JavaDungeons.MOD_ID, "particle/green_flame"));
+        });
+
+        setupFluidRendering(
+            Fluids.DUNGEONS_WATER_STILL, // still fluid object
+            Fluids.DUNGEONS_WATER_FLOWING, // flowing fluid object
+            new Identifier(JavaDungeons.MOD_ID, "dungeons_water"), // texture identifier
+            0xFFFFFF // tint color (white because water is colored in its file)
+        );
+
+        setupFluidRendering(
+            Fluids.SOGGY_SWAMP_WATER_STILL, // still fluid objectne
+            Fluids.SOGGY_SWAMP_WATER_FLOWING, // flowing fluid object
+            new Identifier(JavaDungeons.MOD_ID, "soggy_swamp/soggy_swamp_water"), // texture identifier
+            0xFFFFFF // tint color (white because water is colored in its file)
+        );
+
+        // register containers to screens
+        ScreenProviderRegistry.INSTANCE.<DungeonsTransformerScreenHandler>registerFactory(DungeonsTransformer.ID, screenHandler -> new DungeonsTransformerScreen(
+            screenHandler,
+            MinecraftClient.getInstance().player.getInventory(),
+            DungeonsTransformer.CONTAINER_NAME.setStyle(Style.EMPTY)
+        ));
+
+        //TODO
+		/*ArmorRenderingRegistry.registerModel((entity, stack, slot, defaultModel) ->
+				new PhantomArmorModel<>(1.0F, slot, entity, ((PhantomArmorItem)stack.getItem()).unique), Armors.PHANTOM_ARMOR, Armors.PHANTOM_ARMOR_HELMET);
+		ArmorRenderingRegistry.registerTexture((entity, stack, slot, defaultTexture) ->
+				JavaDungeons.MOD_ID + ":textures/models/armor/phantom_armor.png", Armors.PHANTOM_ARMOR, Armors.PHANTOM_ARMOR_HELMET);
+		ArmorRenderingRegistry.registerModel((entity, stack, slot, defaultModel) ->
+				new EvocationRobeModel<>(1.0F, slot, entity), Armors.EVOCATION_ROBE, Armors.EVOCATION_ROBE_HAT);
+		ArmorRenderingRegistry.registerTexture((entity, stack, slot, defaultTexture) ->
+				JavaDungeons.MOD_ID + ":textures/models/armor/evocation_robe.png", Armors.EVOCATION_ROBE, Armors.EVOCATION_ROBE_HAT);
+		ArmorRenderingRegistry.registerModel((entity, stack, slot, defaultModel) ->
+				new EvocationRobeModel<>(1.0F, slot, entity), Armors.EMBER_ROBE, Armors.EMBER_ROBE_HAT);
+		ArmorRenderingRegistry.registerTexture((entity, stack, slot, defaultTexture) ->
+				JavaDungeons.MOD_ID + ":textures/models/armor/ember_robe.png", Armors.EMBER_ROBE, Armors.EMBER_ROBE_HAT);*/
+
+		/*ArmorRenderingRegistry.registerModel((entity, stack, slot, defaultModel) ->
+				new PhantomArmorModel<>(1.0F, slot, entity, ((PhantomArmorItem)stack.getItem()).unique), Armors.SNOW_ARMOR, Armors.SNOW_ARMOR_HELMET);
+		ArmorRenderingRegistry.registerTexture((entity, stack, slot, defaultTexture) ->
+				JavaDungeons.MOD_ID + ":textures/models/armor/snow_armor.png", Armors.SNOW_ARMOR, Armors.SNOW_ARMOR_HELMET);
+		ArmorRenderingRegistry.registerModel((entity, stack, slot, defaultModel) ->
+				new PhantomArmorModel<>(1.0F, slot, entity, ((PhantomArmorItem)stack.getItem()).unique), Armors.SNOW_ARMOR, Armors.SNOW_ARMOR_HELMET);
+		ArmorRenderingRegistry.registerTexture((entity, stack, slot, defaultTexture) ->
+				JavaDungeons.MOD_ID + ":textures/models/armor/frost_armor.png", Armors.FROST_ARMOR, Armors.FROST_ARMOR_HELMET);
+		ArmorRenderingRegistry.registerModel((entity, stack, slot, defaultModel) ->
+				new PhantomArmorModel<>(1.0F, slot, entity, ((PhantomArmorItem)stack.getItem()).unique), Armors.FROST_BITE, Armors.FROST_BITE_HELMET);
+		ArmorRenderingRegistry.registerTexture((entity, stack, slot, defaultTexture) ->
+				JavaDungeons.MOD_ID + ":textures/models/armor/frost_bite.png", Armors.FROST_BITE, Armors.FROST_BITE_HELMET);*/
+    }    
+
+    public static void setupFluidRendering(final Fluid still, final Fluid flowing, final Identifier textureFluidId, final int color) {
 		final Identifier stillSpriteId = new Identifier(textureFluidId.getNamespace(), "block/" + textureFluidId.getPath() + "_still");
 		final Identifier flowingSpriteId = new Identifier(textureFluidId.getNamespace(), "block/" + textureFluidId.getPath() + "_flow");
 
-		// If they're not already present, add the sprites to the block atlas
 		ClientSpriteRegistryCallback.event(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE).register((atlasTexture, registry) -> {
 			registry.register(stillSpriteId);
 			registry.register(flowingSpriteId);
