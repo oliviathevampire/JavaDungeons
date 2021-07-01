@@ -18,6 +18,7 @@ public class JDConfiguredSurfaceBuilders {
 	public static ConfiguredSurfaceBuilder<?> DUNGEONS_PLAINS;
 	public static ConfiguredSurfaceBuilder<?> PUMPKIN_PASTURES;
 	public static ConfiguredSurfaceBuilder<?> SOGGY_SWAMP;
+	public static ConfiguredSurfaceBuilder<?> DINGY_JUNGLE;
 
 	public static void init() {
 		CACTI_CANYON = newConfiguredSurfaceBuilder("cacti_canyon", new ConfiguredSurfaceBuilder<>(JDSurfaceBuilders.CACTI_CANYON,
@@ -60,6 +61,13 @@ public class JDConfiguredSurfaceBuilders {
 						SoggySwampBlocks.SS_GRASS_BLOCK.getDefaultState(),
 						SoggySwampBlocks.SS_DIRT.getDefaultState(),
 						SoggySwampBlocks.SS_DIRT.getDefaultState()
+				))
+		);
+		DINGY_JUNGLE = newConfiguredSurfaceBuilder("dingy_jungle", new ConfiguredSurfaceBuilder<>(SurfaceBuilder.DEFAULT,
+				new TernarySurfaceConfig(
+						DingyJungleBlocks.DJ_GRASS_BLOCK.getDefaultState(),
+						DingyJungleBlocks.DJ_DIRT.getDefaultState(),
+						DingyJungleBlocks.DJ_DIRTY_PEBBLES.getDefaultState()
 				))
 		);
 	}

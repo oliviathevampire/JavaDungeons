@@ -64,7 +64,7 @@ public class DungeonsCandle extends Block {
 	}
 
 	public static boolean canBeLit(BlockState state) {
-		return state.get(LIT);
+		return !state.get(LIT);
 	}
 
 	@Override

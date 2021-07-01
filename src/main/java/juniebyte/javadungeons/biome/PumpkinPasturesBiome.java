@@ -64,6 +64,7 @@ public class PumpkinPasturesBiome extends Biome {
 		DefaultBiomeFeatures.addDefaultOres(GENERATION_SETTINGS);
 		DefaultBiomeFeatures.addDefaultDisks(GENERATION_SETTINGS);
 		DefaultBiomeFeatures.addDefaultGrass(GENERATION_SETTINGS);
+		DefaultBiomeFeatures.addAmethystGeodes(GENERATION_SETTINGS);
 
 		// add dungeons vegetation
 		GENERATION_SETTINGS.feature(GenerationStep.Feature.VEGETAL_DECORATION,

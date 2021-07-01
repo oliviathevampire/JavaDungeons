@@ -55,6 +55,7 @@ public class CactiCanyonBiome extends Biome {
 		DefaultBiomeFeatures.addLandCarvers(GENERATION_SETTINGS);
 
 		DefaultBiomeFeatures.addDefaultUndergroundStructures(GENERATION_SETTINGS);
+		DefaultBiomeFeatures.addAmethystGeodes(GENERATION_SETTINGS);
 
 		GENERATION_SETTINGS.feature(GenerationStep.Feature.LOCAL_MODIFICATIONS, JDConfiguredFeatures.DUNGEONS_WATER_LAKE);
 

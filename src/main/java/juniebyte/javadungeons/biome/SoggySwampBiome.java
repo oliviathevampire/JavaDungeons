@@ -58,6 +58,7 @@ public final class SoggySwampBiome extends Biome {
 		DefaultBiomeFeatures.addMineables(GENERATION_SETTINGS);
 		DefaultBiomeFeatures.addDefaultOres(GENERATION_SETTINGS);
 		DefaultBiomeFeatures.addClayDisk(GENERATION_SETTINGS);
+		DefaultBiomeFeatures.addAmethystGeodes(GENERATION_SETTINGS);
 
 		DefaultBiomeFeatures.addSwampVegetation(GENERATION_SETTINGS);
 		// add swamp features

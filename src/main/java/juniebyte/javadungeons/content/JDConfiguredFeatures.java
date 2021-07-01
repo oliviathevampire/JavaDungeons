@@ -8,20 +8,27 @@ import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.gen.CountConfig;
 import net.minecraft.world.gen.YOffset;
+import net.minecraft.world.gen.decorator.CountExtraDecoratorConfig;
 import net.minecraft.world.gen.decorator.Decorator;
 import net.minecraft.world.gen.feature.*;
 import net.minecraft.world.gen.feature.size.TwoLayersFeatureSize;
 import net.minecraft.world.gen.foliage.BlobFoliagePlacer;
+import net.minecraft.world.gen.foliage.BushFoliagePlacer;
+import net.minecraft.world.gen.foliage.JungleFoliagePlacer;
 import net.minecraft.world.gen.foliage.LargeOakFoliagePlacer;
 import net.minecraft.world.gen.placer.SimpleBlockPlacer;
 import net.minecraft.world.gen.stateprovider.SimpleBlockStateProvider;
+import net.minecraft.world.gen.treedecorator.CocoaBeansTreeDecorator;
 import net.minecraft.world.gen.treedecorator.LeavesVineTreeDecorator;
+import net.minecraft.world.gen.treedecorator.TrunkVineTreeDecorator;
 import net.minecraft.world.gen.trunk.LargeOakTrunkPlacer;
+import net.minecraft.world.gen.trunk.MegaJungleTrunkPlacer;
 import net.minecraft.world.gen.trunk.StraightTrunkPlacer;
 
 import java.util.OptionalInt;
 
 import static juniebyte.javadungeons.JavaDungeons.MOD_ID;
+import static net.minecraft.world.gen.feature.ConfiguredFeatures.FANCY_OAK;
 
 public class JDConfiguredFeatures {
 
@@ -36,6 +43,11 @@ public class JDConfiguredFeatures {
 	public static ConfiguredFeature<?, ?> DUNGEONS_WATER_LAKE;
 	public static ConfiguredFeature<?, ?> SWAMP_WATER_LAKE;
 	public static ConfiguredFeature<?, ?> CC_GRASS;
+	public static ConfiguredFeature<TreeFeatureConfig, ?> DJ_JUNGLE_TREE;
+	public static ConfiguredFeature<TreeFeatureConfig, ?> DJ_JUNGLE_BUSH;
+	public static ConfiguredFeature<TreeFeatureConfig, ?> DJ_MEGA_JUNGLE_TREE;
+	public static ConfiguredFeature<?, ?> DJ_TREES;
+	public static ConfiguredFeature<?, ?> DJ_TREES_EDGE;
 
 	public static void init() {
 		CW_OAK_TREE = registerConfiguredFeature("cw_oak_tree",
@@ -122,6 +134,58 @@ public class JDConfiguredFeatures {
 		CC_GRASS = JDConfiguredFeatures.registerConfiguredFeature("desert_grass", Feature.RANDOM_PATCH.configure(
 				(new RandomPatchFeatureConfig.Builder(new SimpleBlockStateProvider(CactiCanyonBlocks.CC_DESERT_GRASS.getDefaultState()), new SimpleBlockPlacer())).tries(4).build()
 		).decorate(Decorator.COUNT_MULTILAYER.configure(new CountConfig(1))));
+		DJ_JUNGLE_TREE = JDConfiguredFeatures.registerConfiguredFeature("dj_jungle_tree", Feature.TREE.configure(
+				new TreeFeatureConfig.Builder(
+						new SimpleBlockStateProvider(DingyJungleBlocks.DJ_JUNGLE_LOG.getDefaultState()),
+						new StraightTrunkPlacer(4, 8, 0),
+						new SimpleBlockStateProvider(DingyJungleBlocks.DJ_JUNGLE_LEAVES.getDefaultState()),
+						new SimpleBlockStateProvider(DingyJungleBlocks.DJ_JUNGLE_SAPLING.getDefaultState()),
+						new BlobFoliagePlacer(ConstantIntProvider.create(2), ConstantIntProvider.create(0), 3),
+						new TwoLayersFeatureSize(1, 0, 1)
+				).decorators(ImmutableList.of(new CocoaBeansTreeDecorator(0.2F), TrunkVineTreeDecorator.INSTANCE, LeavesVineTreeDecorator.INSTANCE))
+						.ignoreVines().build()
+		));
+		DJ_JUNGLE_BUSH = JDConfiguredFeatures.registerConfiguredFeature("dj_jungle_bush", Feature.TREE.configure(
+				new TreeFeatureConfig.Builder(
+						new SimpleBlockStateProvider(DingyJungleBlocks.DJ_JUNGLE_LOG.getDefaultState()),
+						new StraightTrunkPlacer(1, 0, 0),
+						new SimpleBlockStateProvider(DingyJungleBlocks.DJ_JUNGLE_LEAVES.getDefaultState()),
+						new SimpleBlockStateProvider(DingyJungleBlocks.DJ_JUNGLE_SAPLING.getDefaultState()),
+						new BushFoliagePlacer(ConstantIntProvider.create(2), ConstantIntProvider.create(1), 2),
+						new TwoLayersFeatureSize(0, 0, 0)
+				).build()
+		));
+		DJ_MEGA_JUNGLE_TREE = JDConfiguredFeatures.registerConfiguredFeature("dj_mega_jungle_tree", Feature.TREE.configure(
+				new TreeFeatureConfig.Builder(
+						new SimpleBlockStateProvider(DingyJungleBlocks.DJ_JUNGLE_LOG.getDefaultState()),
+						new MegaJungleTrunkPlacer(10, 2, 19),
+						new SimpleBlockStateProvider(DingyJungleBlocks.DJ_JUNGLE_LEAVES.getDefaultState()),
+						new SimpleBlockStateProvider(DingyJungleBlocks.DJ_JUNGLE_SAPLING.getDefaultState()),
+						new JungleFoliagePlacer(ConstantIntProvider.create(2), ConstantIntProvider.create(0), 2),
+						new TwoLayersFeatureSize(1, 1, 2)
+				).decorators(ImmutableList.of(TrunkVineTreeDecorator.INSTANCE, LeavesVineTreeDecorator.INSTANCE)).build()
+		));
+		DJ_TREES = JDConfiguredFeatures.registerConfiguredFeature("dj_trees", Feature.RANDOM_SELECTOR.configure(
+				new RandomFeatureConfig(
+						ImmutableList.of(
+								FANCY_OAK.withChance(0.1F),
+								DJ_JUNGLE_BUSH.withChance(0.5F),
+								DJ_MEGA_JUNGLE_TREE.withChance(0.33333334F)
+						),
+						DJ_JUNGLE_TREE
+				)
+		).decorate(ConfiguredFeatures.Decorators.SQUARE_HEIGHTMAP_OCEAN_FLOOR_NO_WATER)
+				.decorate(Decorator.COUNT_EXTRA.configure(new CountExtraDecoratorConfig(50, 0.1F, 1))));
+		DJ_TREES_EDGE = JDConfiguredFeatures.registerConfiguredFeature("dj_trees_edge", Feature.RANDOM_SELECTOR.configure(
+				new RandomFeatureConfig(
+						ImmutableList.of(
+								FANCY_OAK.withChance(0.1F),
+								DJ_JUNGLE_BUSH.withChance(0.5F)
+						),
+						DJ_JUNGLE_TREE
+				)
+		).decorate(ConfiguredFeatures.Decorators.SQUARE_HEIGHTMAP_OCEAN_FLOOR_NO_WATER)
+				.decorate(Decorator.COUNT_EXTRA.configure(new CountExtraDecoratorConfig(2, 0.1F, 1))));
 	}
 
 	public static <T extends FeatureConfig> ConfiguredFeature<T, ?> registerConfiguredFeature(String identifier, ConfiguredFeature<T, ?> configuredFeature) {

@@ -66,6 +66,7 @@ public final class CactiCanyonDesertBiome extends Biome {
 		DefaultBiomeFeatures.addDesertDeadBushes(GENERATION_SETTINGS);
 		DefaultBiomeFeatures.addDefaultMushrooms(GENERATION_SETTINGS);
 		DefaultBiomeFeatures.addDesertVegetation(GENERATION_SETTINGS);
+		DefaultBiomeFeatures.addAmethystGeodes(GENERATION_SETTINGS);
 
 		// add cacti canyon desert vegatation
 

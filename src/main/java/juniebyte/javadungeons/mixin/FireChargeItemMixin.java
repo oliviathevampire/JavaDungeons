@@ -27,7 +27,7 @@ public abstract class FireChargeItemMixin {
 		BlockState blockState = world.getBlockState(blockPos);
 		boolean bl = false;
 		if (! CampfireBlock.canBeLit(blockState) && ! CandleBlock.canBeLit(blockState) &&
-				! CandleCakeBlock.canBeLit(blockState) && DungeonsCandle.canBeLit(blockState)) {
+				! CandleCakeBlock.canBeLit(blockState) && !DungeonsCandle.canBeLit(blockState)) {
 			blockPos = blockPos.offset(context.getSide());
 			if (AbstractFireBlock.canPlaceAt(world, blockPos, context.getPlayerFacing())) {
 				this.playUseSound(world, blockPos);

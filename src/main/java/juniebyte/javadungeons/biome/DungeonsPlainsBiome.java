@@ -71,6 +71,7 @@ public class DungeonsPlainsBiome extends Biome {
 		DefaultBiomeFeatures.addDefaultMushrooms(GENERATION_SETTINGS);
 		DefaultBiomeFeatures.addDefaultVegetation(GENERATION_SETTINGS);
 		DefaultBiomeFeatures.addPlainsFeatures(GENERATION_SETTINGS);
+		DefaultBiomeFeatures.addAmethystGeodes(GENERATION_SETTINGS);
 
 		// add dungeons vegetation
 		GENERATION_SETTINGS.feature(GenerationStep.Feature.VEGETAL_DECORATION, JDConfiguredFeatures.registerConfiguredFeature("short_grass", Feature.RANDOM_PATCH.configure(

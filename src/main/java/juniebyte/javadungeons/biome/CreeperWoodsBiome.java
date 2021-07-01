@@ -69,6 +69,7 @@ public class CreeperWoodsBiome extends Biome {
 		DefaultBiomeFeatures.addDefaultVegetation(GENERATION_SETTINGS);
 		DefaultBiomeFeatures.addSprings(GENERATION_SETTINGS);
 		DefaultBiomeFeatures.addFrozenTopLayer(GENERATION_SETTINGS);
+		DefaultBiomeFeatures.addAmethystGeodes(GENERATION_SETTINGS);
 
 		GENERATION_SETTINGS.structureFeature(ConfiguredStructureFeatures.MINESHAFT);
 		GENERATION_SETTINGS.structureFeature(ConfiguredStructureFeatures.STRONGHOLD);

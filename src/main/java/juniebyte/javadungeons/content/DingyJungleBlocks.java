@@ -1,8 +1,8 @@
 package juniebyte.javadungeons.content;
 
 import juniebyte.javadungeons.JavaDungeons;
-import juniebyte.javadungeons.JavaDungeonsClient;
 import juniebyte.javadungeons.blocks.*;
+import juniebyte.javadungeons.blocks.saplings.DingyJungleSaplingGenerator;
 import net.minecraft.block.Block;
 import net.minecraft.block.Material;
 import net.minecraft.sound.BlockSoundGroup;
@@ -66,6 +66,7 @@ public class DingyJungleBlocks {
     // custom dingy jungle wood & leaves
     public static Block DJ_JUNGLE_LOG;
     public static Block DJ_JUNGLE_LEAVES;
+    public static Block DJ_JUNGLE_SAPLING;
 
     public static void init() {
         // grass, dirt & mud
@@ -125,5 +126,6 @@ public class DingyJungleBlocks {
         // custom dingy jungle wood & leaves
         DJ_JUNGLE_LOG = JavaDungeons.REGISTRY_HELPER.registerBlock(new DungeonsPillar(Material.WOOD, 2.0F, 2.0F, BlockSoundGroup.WOOD), "dj_jungle_log", JavaDungeons.DINGY_JUNGLE);
         DJ_JUNGLE_LEAVES = JavaDungeons.REGISTRY_HELPER.registerBlock(new DungeonsLeaves(), "dj_jungle_leaves", JavaDungeons.DINGY_JUNGLE);
+        DJ_JUNGLE_SAPLING = JavaDungeons.REGISTRY_HELPER.registerBlock(new DungeonsSapling(new DingyJungleSaplingGenerator()), "dj_jungle_sapling", JavaDungeons.DINGY_JUNGLE);
     }
 }

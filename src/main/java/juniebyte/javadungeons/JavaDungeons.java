@@ -118,7 +118,7 @@ public class JavaDungeons implements ModInitializer {
 				if (AbstractFireBlock.canPlaceAt(world, blockPos, direction)) {
 					world.setBlockState(blockPos, AbstractFireBlock.getState(world, blockPos));
 					world.emitGameEvent(null, GameEvent.BLOCK_PLACE, blockPos);
-				} else if (!CampfireBlock.canBeLit(blockState) && !CandleBlock.canBeLit(blockState) && !CandleCakeBlock.canBeLit(blockState) && DungeonsCandle.canBeLit(blockState)) {
+				} else if (!CampfireBlock.canBeLit(blockState) && !CandleBlock.canBeLit(blockState) && !CandleCakeBlock.canBeLit(blockState) && !DungeonsCandle.canBeLit(blockState)) {
 					if (blockState.getBlock() instanceof TntBlock) {
 						TntBlock.primeTnt(world, blockPos);
 						world.removeBlock(blockPos, false);
