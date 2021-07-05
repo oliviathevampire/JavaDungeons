@@ -1,18 +1,17 @@
 package juniebyte.javadungeons.biome;
 
 import juniebyte.javadungeons.content.CactiCanyonBlocks;
-import juniebyte.javadungeons.content.JDConfiguredSurfaceBuilders;
 import juniebyte.javadungeons.content.JDConfiguredFeatures;
+import juniebyte.javadungeons.content.JDConfiguredSurfaceBuilders;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.sound.BiomeMoodSound;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.intprovider.ConstantIntProvider;
 import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.BiomeEffects;
-import net.minecraft.world.biome.GenerationSettings;
-import net.minecraft.world.biome.SpawnSettings;
+import net.minecraft.world.biome.*;
 import net.minecraft.world.gen.CountConfig;
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.decorator.Decorator;
@@ -36,7 +35,7 @@ public class CactiCanyonBiome extends Biome {
 			.grassColor(0x197862)
 			.foliageColor(0x197862)
 			.fogColor(12638463)
-			.skyColor(calcSkyColor(0.8F))
+			.skyColor(calcSkyColor(2.0F))
 			.moodSound(BiomeMoodSound.CAVE);
 	static final ConfiguredSurfaceBuilder<?> SURFACE_BUILDER = JDConfiguredSurfaceBuilders.CACTI_CANYON;
 	static final GenerationSettings.Builder GENERATION_SETTINGS = new GenerationSettings.Builder()
@@ -61,6 +60,18 @@ public class CactiCanyonBiome extends Biome {
 
 		DefaultBiomeFeatures.addDungeons(GENERATION_SETTINGS);
 		DefaultBiomeFeatures.addMineables(GENERATION_SETTINGS);
+
+		GENERATION_SETTINGS.feature(GenerationStep.Feature.UNDERGROUND_DECORATION, Registry.register(
+				BuiltinRegistries.CONFIGURED_FEATURE,
+				new Identifier(MOD_ID, "replace_normal_stone"),
+				Feature.NETHERRACK_REPLACE_BLOBS.configure(
+						new ReplaceBlobsFeatureConfig(
+								Blocks.STONE.getDefaultState(),
+								Blocks.CALCITE.getDefaultState(),
+								ConstantIntProvider.create(60)
+						)
+				).range(ConfiguredFeatures.Decorators.BOTTOM_TO_TOP).spreadHorizontally().repeat(25)
+		));
 
 		// add cacti canyon dirt
 		GENERATION_SETTINGS.feature(GenerationStep.Feature.UNDERGROUND_ORES, JDConfiguredFeatures.CC_DIRT);

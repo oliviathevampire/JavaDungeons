@@ -11,6 +11,7 @@ import net.minecraft.sound.BiomeMoodSound;
 import net.minecraft.structure.PillagerOutpostGenerator;
 import net.minecraft.structure.PlainsVillageData;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.noise.SimplexNoiseSampler;
 import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.Biome;
@@ -19,12 +20,15 @@ import net.minecraft.world.biome.GenerationSettings;
 import net.minecraft.world.biome.SpawnSettings;
 import net.minecraft.world.gen.CountConfig;
 import net.minecraft.world.gen.GenerationStep;
+import net.minecraft.world.gen.SimpleRandom;
 import net.minecraft.world.gen.decorator.ChanceDecoratorConfig;
 import net.minecraft.world.gen.decorator.Decorator;
 import net.minecraft.world.gen.feature.*;
 import net.minecraft.world.gen.placer.SimpleBlockPlacer;
 import net.minecraft.world.gen.stateprovider.SimpleBlockStateProvider;
 import net.minecraft.world.gen.surfacebuilder.ConfiguredSurfaceBuilder;
+
+import java.awt.*;
 
 import static juniebyte.javadungeons.content.Biomes.calcSkyColor;
 
@@ -46,8 +50,20 @@ public class DungeonsPlainsBiome extends Biome {
 			.surfaceBuilder(SURFACE_BUILDER);
 	static final SpawnSettings.Builder SPAWN_SETTINGS = new SpawnSettings.Builder();
 
+	private static final SimplexNoiseSampler samplerA = new SimplexNoiseSampler(new SimpleRandom(8086));
+	private static final SimplexNoiseSampler samplerB = new SimplexNoiseSampler(new SimpleRandom(2024));
+	private static final SimplexNoiseSampler samplerC = new SimplexNoiseSampler(new SimpleRandom(1492));
+
 	public DungeonsPlainsBiome() {
 		super(WEATHER, Category.PLAINS, 0.125F, 0.05F, BIOME_EFFECTS.build(), GENERATION_SETTINGS.build(), SPAWN_SETTINGS.build());
+	}
+
+	public int getGrassColorAt(double x, double z) {
+		int red = (int) (((samplerA.sample(x / 36, z / 36) + 1.0) / 2) * 22) + 70;
+		int green = (int) (((samplerB.sample(x / 12, z / 12) + 1.0) / 2) * 30) + 130;
+		int blue = (int) (((samplerC.sample(x / 30, z / 30) + 1.0) / 2) * 20) + 40;
+		Color c = new Color(red, green, blue);
+		return c.getRGB();
 	}
 
 	static {

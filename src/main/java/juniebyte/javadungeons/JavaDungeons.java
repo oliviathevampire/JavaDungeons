@@ -79,7 +79,6 @@ public class JavaDungeons implements ModInitializer {
 		JDSurfaceBuilders.init();
 		JDConfiguredSurfaceBuilders.init();
 		StructureFeatures.init();
-		StructureFeatures.setupStructures();
 		ConfiguredStructureFeatures.init();
 		Biomes.init();
 

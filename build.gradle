@@ -13,12 +13,10 @@ group = project.maven_group
 
 repositories {
 	maven { url="https://raw.githubusercontent.com/vampire-studios/VampireStudiosMaven/main/" }
-	maven { url="https://maven.terraformersmc.com/" }
-	maven { url "https://maven.shedaniel.me/" }
-	maven{ url="https://jitpack.io" }
-	maven {
-		url "https://nexus.resourcefulbees.com/repository/maven-public/"
-	}
+	maven { url="https://maven.shedaniel.me/" }
+	maven { url="https://server.bbkr.space:8081/artifactory/libs-release" }
+	maven { url="https://jitpack.io" }
+	maven { url="https://nexus.resourcefulbees.com/repository/maven-public/" }
 }
 
 minecraft {
@@ -51,12 +49,6 @@ dependencies {
 		exclude group: "io.github.cottonmc"
 	}
 
-	modImplementation ("com.github.cottonmc:Jankson-Fabric:1.16-SNAPSHOT") {
-		exclude group: "net.fabricmc.fabric-api"
-		force = true
-	}
-
-	modImplementation "com.terraformersmc:modmenu:2.0.0-beta.7"
 	modImplementation "com.telepathicgrunt:Blame-Fabric:1.17-4.0.0-fabric"
 }
 
