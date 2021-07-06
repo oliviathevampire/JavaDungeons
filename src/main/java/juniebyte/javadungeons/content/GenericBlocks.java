@@ -23,6 +23,8 @@ public class GenericBlocks {
 	public static Block SACK;
 	public static Block SMALL_SACK;
 	public static BlockEntityType<DungeonsSackBlockEntity> SACK_BE;
+	public static Block SARCOPHAGUS;
+	public static Block BELL;
 
 	// food related
 	public static Block BARREL_CLOSED;
@@ -148,6 +150,8 @@ public class GenericBlocks {
 		SACK = JavaDungeons.REGISTRY_HELPER.registerBlock(new DungeonsSack(Material.WOOL, 0.8F, 0.8F, BlockSoundGroup.WOOL, false, 2), "sack", JavaDungeons.GENERIC);
 		SMALL_SACK = JavaDungeons.REGISTRY_HELPER.registerBlock(new DungeonsSack(Material.WOOL, 0.8F, 0.8F, BlockSoundGroup.WOOL, true, 1), "small_sack", JavaDungeons.GENERIC);
 		SACK_BE = JavaDungeons.REGISTRY_HELPER.registerBlockEntity(BlockEntityType.Builder.create(DungeonsSackBlockEntity::new, SACK, SMALL_SACK), "sack");
+		SARCOPHAGUS = JavaDungeons.REGISTRY_HELPER.registerBlock(new HorizontalFacingBlock(Material.STONE, 1.5F, 6.0F, BlockSoundGroup.DEEPSLATE), "sarcophagus", JavaDungeons.GENERIC);
+		BELL = JavaDungeons.REGISTRY_HELPER.registerBlock(new HorizontalFacingBlock(Material.METAL, 1.5F, 6.0F, BlockSoundGroup.COPPER), "bell_tower", JavaDungeons.GENERIC);
 
 		// food related items
 		BARREL_CLOSED = JavaDungeons.REGISTRY_HELPER.registerBlock(new DungeonsBlock(Material.WOOD, 2.0F, 3.0F, BlockSoundGroup.WOOD), "barrel_closed", JavaDungeons.GENERIC);

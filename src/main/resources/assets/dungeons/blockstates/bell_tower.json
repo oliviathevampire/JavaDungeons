@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "facing=north": { "model": "dungeons:block/bell_tower" },
+        "facing=south": { "model": "dungeons:block/bell_tower", "y": 180 },
+        "facing=east": { "model": "dungeons:block/bell_tower", "y": 90 },
+        "facing=west": { "model": "dungeons:block/bell_tower", "y": 270 }
+    }
+}
